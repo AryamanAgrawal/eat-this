@@ -2,6 +2,7 @@
 CS 320 Project for Dining in Amherst
 
 ## Contributing
+- Branch naming scheme: <author>/<description>
 - Make sure you make a new branch for your work
 - Make sure that your branch is as upto date with develop as possible
 - Make sure you make a pull request (comparing to develop) to make changes
