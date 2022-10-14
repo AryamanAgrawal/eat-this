@@ -7,7 +7,7 @@ const cron = require('node-cron');
 
 (async () => {
     let url = 'https://umassdining.com/locations-menus/berkshire/menu';
-    //cron.schedule('* * * * * *', async() => {
+    cron.schedule('* * * * * *', async() => {
         let response = await rp(url);
         let $ = cheerio.load(response);
         let count = $('a').length;
@@ -22,7 +22,7 @@ const cron = require('node-cron');
                 console.log(dishJSON + "\n");
             }
         }
-    //});
+    });
 
 })();
 
