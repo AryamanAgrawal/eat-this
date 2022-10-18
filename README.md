@@ -4,7 +4,7 @@ CS 320 Project for Dining in Amherst
 ## Initial Dev Setup
 - Install `git`, `npm`, `node` on your local machine. Check their validity on the command-line
 - Clone the repository
-  - I personally user GitHub Desktop, but you're `git` command line is also great
+  - I personally use GitHub Desktop, but you're `git` command line is also great
 - Make sure you're on the right branch you need to work on. Check `Contributing` for more details
 - Go to the project directory, the folder: `eat-this` using Terminal or CMD (this can be done using `cd`)
   - Example `cd` command looks like: `cd ~/dev/git/eat-this` to get into the eat-this fodler/directory
