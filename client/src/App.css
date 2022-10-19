@@ -1,0 +1,15 @@
+*{
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    scroll-behavior: smooth;
+}
+
+body {
+    background: white;
+}
+
+a {
+    color: unset !important;
+    text-decoration: none !important; 
+}

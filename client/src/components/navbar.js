@@ -1,4 +1,7 @@
-import React from "react";
+import React, {useState} from 'react';
+import './navbar.css';
+import {RiMenu3Line, RiCloseLine, RiFileTransferLine} from 'react-icons/ri';
+import logo from '../assets/logo.svg';
 
 // We import bootstrap to make our application look better.
 import "bootstrap/dist/css/bootstrap.css";
@@ -6,8 +9,64 @@ import "bootstrap/dist/css/bootstrap.css";
 // We import NavLink to utilize the react router.
 import { NavLink } from "react-router-dom";
 
+// import MediaQuery for mobile-responsive;
+import { useMediaQuery } from 'react-responsive';
+
+
+
+
 // Here, we display our Navbar
 export default function Navbar() {
+    const [toggleMenu, setToggleMenu] = useState(false);
+
+    const isDesktopOrLaptop = useMediaQuery({ minWidth: 1224 })
+    const isBigScreen = useMediaQuery({ minWidth: 1824 })
+    const isTabletOrMobile = useMediaQuery({ maxWidth: 1224 })
+    const isPortrait = useMediaQuery({ orientation: 'portrait' })
+    const isRetina = useMediaQuery({ minResolution: '2dppx' })
+
+    //Menu one the Navbar
+    const Menu = () => (
+    <>
+        <p><a href="#home">Home</a></p>
+        <p><a href="#dining">Dining</a></p>
+        <p><a href="#user">User</a></p>
+    </>
+    )
+
+    const DesktopNav = () => (
+        <>
+            <Menu/>
+            <div className="main__navbar-sign">
+                <button className="login" type = "button">Log in</button>
+                <button className="signup" type = "button">Sign up</button>
+            </div>
+        </>
+    )
+
+    const NavMenu = () => (
+        <>
+        <div className="main__navbar-menu">
+        {toggleMenu 
+          ? <RiCloseLine color = "#fff" size={27} onClick={() => setToggleMenu(false)}/>
+          : <RiMenu3Line color = "#fff" size={27} onClick={() => setToggleMenu(true)}/>
+        }
+        {toggleMenu && (
+          <div className="main__navbar-menu_container scale-up-center">
+            <div className ="main__navbar-menu_container-links">
+              <Menu/>
+              <div className="main__navbar-sign-navMenu">
+                <button className="login-navMenu" type = "button">Log in</button>
+                <button className="signup" type = "button">Sign up</button>
+            </div>
+            </div>
+          </div>
+        )
+        }
+        </div>
+        </>
+    )
+
     return (
         <div>
             <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -36,6 +95,17 @@ export default function Navbar() {
                     </ul>
                 </div>
             </nav>
-        </div>
+            <div className= "main__navbar">
+                <div className= "main__navbar-links">
+                    <div className= "main__navbar-links_logo">
+                        {/* need to change to our logo */}
+                        <img src={logo} alt="logo" />
+                    </div>
+                    <div className='main__navbar-links_container'>
+                        {isDesktopOrLaptop? <DesktopNav/> : <NavMenu/>}
+                    </div>
+                </div>
+            </div>
+        </div>   
     );
 }
