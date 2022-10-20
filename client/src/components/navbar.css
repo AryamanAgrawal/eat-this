@@ -45,20 +45,17 @@
     flex-direction: column;
 }
 
-.main__navbar-links_container p, 
-.main__navbar-sign p, 
-.main__navbar-menu_container p{
+.nav-item{
     color: black;
     font-weight: 500;
     font-size: 18px;
     line-height: 25px;
     text-transform: capitalize;
-    margin: 0 1rem;
+    margin: 0.5rem 1rem;
     cursor: pointer;
 }
 
-.main__navbar-sign button, 
-.main__navbar-menu_container button{
+.nav-item button{
     padding: 0.5rem 1rem;
     color: black;
     font-weight: 500;
@@ -76,7 +73,6 @@
 
 .login{
     background: rgb(207, 207, 207);
-    margin-right: 1rem;
 }
 
 .login-navMenu{
@@ -93,7 +89,7 @@
     cursor:pointer;
 }
 
-.main__navbar-menu_container{
+.main__navbar-menu_container-links{
     display: flex;
     justify-content: flex-end;
     align-items: flex-end;

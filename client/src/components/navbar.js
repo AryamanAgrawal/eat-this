@@ -28,19 +28,17 @@ export default function Navbar() {
     //Menu one the Navbar
     const Menu = () => (
     <>
-        <p><a href="#home">Home</a></p>
-        <p><a href="#dining">Dining</a></p>
-        <p><a href="#user">User</a></p>
+        <NavLink className="nav-item" to="/home">Home</NavLink>
+        <NavLink className="nav-item" to="/dining">Dining</NavLink>
+        <NavLink className="nav-item" to="/user">User</NavLink>
     </>
     )
 
     const DesktopNav = () => (
         <>
             <Menu/>
-            <div className="main__navbar-sign">
-                <button className="login" type = "button">Log in</button>
-                <button className="signup" type = "button">Sign up</button>
-            </div>
+            <NavLink className="nav-item" to="/login"><button className="login" type = "button">Log in</button></NavLink>
+            <NavLink className="nav-item" to="/signup"><button className="signup" type = "button">Sign up</button></NavLink>
         </>
     )
 
@@ -54,11 +52,9 @@ export default function Navbar() {
         {toggleMenu && (
           <div className="main__navbar-menu_container scale-up-center">
             <div className ="main__navbar-menu_container-links">
-              <Menu/>
-              <div className="main__navbar-sign-navMenu">
-                <button className="login-navMenu" type = "button">Log in</button>
-                <button className="signup" type = "button">Sign up</button>
-            </div>
+                <Menu/>
+                <NavLink className="nav-item" to="/login"><button className="login" type = "button">Log in</button></NavLink>
+                <NavLink className="nav-item" to="/signup"><button className="signup" type = "button">Sign up</button></NavLink>
             </div>
           </div>
         )
