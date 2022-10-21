@@ -12,14 +12,14 @@ yarn-error.log*
 build/Release
 
 # Dependency directories
-node_modules/
-jspm_packages/
+node_modules
+jspm_packages
 
 # Distribution directories
-dist/
+dist
 
 # Typescript v1 declaration files
-typings/
+typings
 
 # Optional npm cache directory
 .npm
@@ -37,15 +37,15 @@ typings/
 .yarn-integrity
 
 # dependencies
-/node_modules
-/.pnp
+node_modules
+.pnp
 .pnp.js
 
 # testing
-/coverage
+coverage
 
 # production
-/build
+build
 
 # misc
 .DS_Store
