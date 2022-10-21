@@ -20,10 +20,23 @@ const dining = ['berkshire','hampshire','worcester','franklin'];
             for (let i = 0; i< count; i++){
                 let test = $('a[data-ingredient-list]')[i.toString()];
                 if (test !== undefined){
+                    //dishname: ingredient, allergens, nutritionValues, cusineType(?)
                     let dishname = test['attribs']['data-dish-name'].toString();
                     let ingredient = test['attribs']['data-ingredient-list'].toString();
+                    let allergens = test['attribs']['data-allergens'].toString();
+                    
+                    let nutritionValues = [
+                        test['attribs']['data-calories'].toString(),
+                        test['attribs']['data-total-fat'].toString(),
+                        test['attribs']['data-cholesterol'].toString(),
+                        test['attribs']['data-sodium'].toString(),
+                        test['attribs']['data-total-carb'].toString(),
+                        test['attribs']['data-dietary-fiber'].toString(),
+                        test['attribs']['data-sugars'].toString(),
+                        test['attribs']['data-protein'].toString()
+                    ];
                     let dish = {};
-                    dish[dishname] = ingredient;
+                    dish[dishname] = [ingredient, allergens, nutritionValues];
                     let dishJSON = JSON.stringify(dish);
                     console.log(location+":  "+ dishJSON + "\n");
                 }
