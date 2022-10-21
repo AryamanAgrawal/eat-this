@@ -13,11 +13,19 @@ const ObjectId = require("mongodb").ObjectId;
 
 const bcrypt = require("bcrypt");
 
+// register request schema:
+// {
+//     "firstName": String,
+//     "lastName": String
+//     "email": String,
+//     "password": String
+// }
 userRoutes.route("/register").post(function (req, response) {
     let db_connect = dbo.getDb();
     bcrypt.hash(req.body.password, 10, function (err, hash) {
         let myobj = {
-            name: req.body.name,
+            firstName: req.body.firstName,
+            lastName: req.body.lastName,
             email: req.body.email,
             password: hash,
             preferenceId: "",
@@ -31,7 +39,11 @@ userRoutes.route("/register").post(function (req, response) {
     })
 });
 
-
+// login request schema:
+// {
+//     "email": String,
+//     "password": String
+// }
 userRoutes.route("/login").get(function (req, response) {
     let db_connect = dbo.getDb();
     let myquery = { email: req.body.email };
