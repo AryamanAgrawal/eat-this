@@ -33,8 +33,7 @@ jobs:
     # - run: npm test      
     #   working-directory: ./server
     - name: Use React.js    
-      run: |
-        npm ci
+      run: |        
         npm run build --if-present
         npm test      
       working-directory: ./client
