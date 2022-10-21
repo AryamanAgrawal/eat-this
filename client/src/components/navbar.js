@@ -28,7 +28,7 @@ export default function Navbar() {
     //Menu one the Navbar
     const Menu = () => (
     <>
-        <NavLink className="nav-item" to="/home">Home</NavLink>
+        <NavLink className="nav-item" to="/">Home</NavLink>
         <NavLink className="nav-item" to="/dining">Dining</NavLink>
         <NavLink className="nav-item" to="/user">User</NavLink>
     </>
