@@ -1,26 +1,16 @@
 const express = require("express");
-
-// userRoutes is an instance of the express router.
-// We use it to define our routes.
-// The router will be added as a middleware and will take control of requests starting with path /user.
 const userRoutes = express.Router();
-
-// This will help us connect to the database
 const dbo = require("../db/conn");
-
-// This help convert the id from string to ObjectId for the _id.
-const ObjectId = require("mongodb").ObjectId;
-
 const bcrypt = require("bcrypt");
 
-// register request schema:
-// {
-//     "firstName": String,
-//     "lastName": String
-//     "email": String,
-//     "password": String
-// }
-userRoutes.route("/register").post(function (req, response) {
+/** Register a user */
+/** request.body = {
+    firstName: String,
+    lastName: String,
+    email: String,
+    password: String
+} */
+userRoutes.route("/register").post(function (req, res) {
     let db_connect = dbo.getDb();
     bcrypt.hash(req.body.password, 10, function (err, hash) {
         let myobj = {
@@ -28,41 +18,106 @@ userRoutes.route("/register").post(function (req, response) {
             lastName: req.body.lastName,
             email: req.body.email,
             password: hash,
-            preferenceId: "",
         };
-        db_connect.collection("users").insertOne(myobj, function (err, res) {
+        db_connect.collection("users").insertOne(myobj, function (err, result) {
             if (err) {
-                response.status(404).json({ message: "Registration failed", err });
+                res.status(404).json({ message: "Registration failed", err });
             };
-            response.status(200).json({ message: "Registration successful", res });
+            res.status(200).json({ message: "Registration successful", result });
         })
     })
 });
 
-// login request schema:
-// {
-//     "email": String,
-//     "password": String
-// }
-userRoutes.route("/login").get(function (req, response) {
+/** Login a user */
+/** request.body = {    
+    email: String,
+    password: String
+} */
+userRoutes.route("/login").get(function (req, res) {
     let db_connect = dbo.getDb();
     let myquery = { email: req.body.email };
     db_connect
         .collection("users")
         .findOne(myquery, function (err, doc) {
             if (err) {
-                response.status(404).json({ message: "User not found", err });
+                res.status(404).json({ message: "User not found", err });
             };
             if (doc) {
                 bcrypt.compare(req.body.password, doc.password, function (err, result) {
                     if (result) {
-                        response.status(200).json({ message: "Login Successful", result });
+                        res.status(200).json({ message: "Login Successful", result });
                     } else {
-                        response.status(401).json({ message: "Login Unsuccessful", err });
+                        res.status(401).json({ message: "Login Unsuccessful", err });
                     }
                 });
             }
         })
 });
+
+/** Fetch a single user by id */
+/** request.body = {
+ *    id: id
+ * } */
+userRoutes.route("/user/:id").get(function (req, res) {
+    let db_connect = dbo.getDb();
+    let myquery = { _id: ObjectId(req.params.id) };
+    db_connect
+        .collection("users")
+        .findOne(myquery, function (err, result) {
+            if (err) {
+                res.status(404).json({ message: "Failed to fetch user", err });
+                throw err;
+            }
+            res.status(200).json({ message: "Success: Fetched user", result });
+        });
+});
+
+
+/** Update a single user by id */
+/** request.body = {
+ *    id: id
+ *    user: {
+ *      name: String,
+ *      email: String,
+ *      password: String, // not possible
+ *   }
+ * } */
+userRoutes.route("/dining/update/:id").post(function (req, res) {
+    let db_connect = dbo.getDb();
+    let myquery = { _id: ObjectId(req.params.id) };
+    let newvalues = {
+        $set: {
+            name: req.body.dinigLocation.name,
+            email: req.body.dinigLocation.email,
+            password: req.body.dinigLocation.password,
+        },
+    };
+    db_connect
+        .collection("users")
+        .updateOne(myquery, newvalues, function (err, result) {
+            if (err) {
+                res.status(404).json({ message: "Failed to update user", err });
+                throw err;
+            }
+            res.status(200).json({ message: "Success: User updated", result });
+        });
+});
+
+/** Delete a single user document by id */
+/** request.body = {
+ *    id: id
+ * } */
+userRoutes.route("/user/:id").delete((req, res) => {
+    let db_connect = dbo.getDb();
+    let myquery = { _id: ObjectId(req.params.id) };
+    db_connect.collection("users").deleteOne(myquery, function (err, obj) {
+        if (err) {
+            res.status(404).json({ message: "Failed to delete user", err });
+            throw err;
+        }
+        res.status(200).json({ message: "Success: User deleted", obj });
+    });
+});
+
 
 module.exports = userRoutes;
