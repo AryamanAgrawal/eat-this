@@ -13,8 +13,6 @@ import { NavLink } from "react-router-dom";
 import { useMediaQuery } from 'react-responsive';
 
 
-
-
 // Here, we display our Navbar
 export default function Navbar() {
     const [toggleMenu, setToggleMenu] = useState(false);
