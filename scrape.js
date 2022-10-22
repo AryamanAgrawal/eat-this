@@ -12,7 +12,7 @@ const dining = ['berkshire','hampshire','worcester','franklin'];
     dining.map(async(location) => {
         
         let url = 'https://umassdining.com/locations-menus/'+location+'/menu';
-        //cron.schedule('30 * * * * *', async() => {
+        //cron.schedule('0 1 * * *', async() => {
             let response = await rp(url);
             let $ = cheerio.load(response);
             let count = $('a').length;
