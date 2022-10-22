@@ -3,7 +3,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 2rem 2rem;
-    background: rgb(189, 189, 189);
+    background: #881c1c;
 }
 
 .main__navbar-links{
@@ -46,7 +46,7 @@
 }
 
 .nav-item{
-    color: black;
+    color: white !important;   
     font-weight: 500;
     font-size: 18px;
     line-height: 25px;
@@ -68,11 +68,11 @@
 }
 
 .signup{
-    background: rgb(47, 255, 109);
+    background: white;
 }
 
 .login{
-    background: rgb(207, 207, 207);
+    background: white;
 }
 
 .login-navMenu{
@@ -95,7 +95,7 @@
     align-items: flex-end;
     flex-direction: column;
     text-align: end;
-    background: rgb(129, 129, 129) ;
+    background: #ae5151 ;
     padding: 2rem;
     position: absolute;
     top: 40px;
