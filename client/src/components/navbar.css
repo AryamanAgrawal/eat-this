@@ -1,0 +1,116 @@
+.main__navbar{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2rem 2rem;
+    background: rgb(189, 189, 189);
+}
+
+.main__navbar-links{
+    flex:1;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-right: 2rem;
+}
+
+.main__navbar-links_logo{
+    margin-right: 2rem;
+    flex:1;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.main__navbar-links_logo img {
+    width: 62.56px;
+    height: 16.02px;
+}
+
+.main__navbar-links_container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.main__navbar-sign {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.main__navbar-sign-navMenu{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    flex-direction: column;
+}
+
+.nav-item{
+    color: black;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 25px;
+    text-transform: capitalize;
+    margin: 0.5rem 1rem;
+    cursor: pointer;
+}
+
+.nav-item button{
+    padding: 0.5rem 1rem;
+    color: black;
+    font-weight: 500;
+    font-size: 18px;
+    line-height:25px;
+    border-radius: 20px;
+    border:0;
+    outline: none;
+    cursor:pointer;
+}
+
+.signup{
+    background: rgb(47, 255, 109);
+}
+
+.login{
+    background: rgb(207, 207, 207);
+}
+
+.login-navMenu{
+    background: rgb(207, 207, 207);
+    margin: 1rem 0 ;
+}
+
+.main__navbar-menu {
+    margin-left: 1rem;
+    position: relative;
+}
+
+.main__navbar-menu svg{
+    cursor:pointer;
+}
+
+.main__navbar-menu_container-links{
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    flex-direction: column;
+    text-align: end;
+    background: rgb(129, 129, 129) ;
+    padding: 2rem;
+    position: absolute;
+    top: 40px;
+    right: 0;
+    margin-top: 1rem;
+    min-width: 210px;
+    border-radius: 5px;
+    box-shadow: 0 0 5 rgba(0,0,0,0.2);
+}
+
+.main__navbar-menu_container p{
+    margin: 1rem 0;
+}
+
+.main__navbar-menu_container-links-sign {
+    display: none;
+}
+
