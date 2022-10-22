@@ -1,5 +1,5 @@
-// var express = require('express');
-// var router = express.Router();
+var express = require('express');
+var router = express.Router();
 
 const rp = require('request-promise');
 const cheerio = require('cheerio');
@@ -46,4 +46,5 @@ const dining = ['berkshire','hampshire','worcester','franklin'];
 })();
 
 
-// module.exports = router;
+ module.exports = router;
+
