@@ -3,10 +3,10 @@ import { Card, Row, Col, Container } from "react-bootstrap";
 import "./diningCard.css"
 
 function DiningCard() {
-    const [diningData, setdiningData] = useState([]);
+    const [diningData, setDiningData] = useState([]);
     useEffect(() => {
         const fetchData = async () => {
-            const response = await fetch(`http://localhost:8000/dining/`);
+            const response = await fetch(`https://umasseatthis.herokuapp.com/dining`);
 
             if (!response.ok) {
                 const message = `An error occurred: ${response.statusText}`;
@@ -15,7 +15,7 @@ function DiningCard() {
             }
 
             const records = await response.json();
-            setdiningData(records.result);
+            setDiningData(records.result);
         }
         fetchData();
     }, [])
