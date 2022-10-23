@@ -4,8 +4,7 @@ import './App.css';
 import { Route, Routes } from "react-router-dom";
 
 // We import all the components we need in our app
-import Navbar from "./components/navbar";
-
+import Navbar from "./components/navbar"
 import Home from './pages/home';
 import Dining from './pages/dining';
 import User from './pages/user';
@@ -18,13 +17,16 @@ const App = () => {
             <Navbar />
             <Routes>
                 <Route exact path='/' element={<Home />} />
-                <Route path='/dining' element={<Dining/>} />
-                <Route path='/user' element={<User/>} />
-                <Route path='/login' element={<LogIn/>} />
-                <Route path='/signup' element={<SignUp/>} />
+                <Route path='/dining' element={<Dining />} />
+                <Route path='/user' element={<User />} />
+                <Route path='/login' element={<LogIn />} />
+                <Route path='/signup' element={<SignUp />} />
             </Routes>
         </div>
+
+
     );
 };
 
 export default App;
+
