@@ -10,7 +10,6 @@ import Dining from './pages/dining';
 import User from './pages/user';
 import LogIn from './pages/login';
 import SignUp from './pages/signup';
-import DiningCard from "./components/diningCard";
 
 const App = () => {
     return (
@@ -23,10 +22,6 @@ const App = () => {
                 <Route path='/login' element={<LogIn />} />
                 <Route path='/signup' element={<SignUp />} />
             </Routes>
-            <div className="home-cards">
-                <DiningCard />
-            </div>
-
         </div>
 
 

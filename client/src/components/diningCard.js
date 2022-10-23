@@ -1,4 +1,4 @@
-import React, { useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import { Card, Row, Col, Container } from "react-bootstrap";
 import "./diningCard.css"
 
@@ -7,7 +7,7 @@ function DiningCard() {
     useEffect(() => {
         const fetchData = async () => {
             const response = await fetch(`http://localhost:8000/dining/`);
-            
+
             if (!response.ok) {
                 const message = `An error occurred: ${response.statusText}`;
                 window.alert(message);
@@ -18,27 +18,26 @@ function DiningCard() {
             setdiningData(records.result);
         }
         fetchData();
-    },[])
-  return (
-    <Container>
-        <Row guter={40} className="row">
-        {diningData.map((value, index) => (
-        <Col key={index} xs={12} md={6} lg={6}>
-             <Card >
-                 <Card.Img src={value.image} alt="dinning images" />
+    }, [])
+    return (
+        <Container>
+            <Row guter={40} className="row">
+                {diningData.map((value, index) => (
+                    <Col key={index} xs={12} md={6} lg={6}>
+                        <Card class="shadow" >
+                            <Card.Img src={value.image} alt="dining images" />
+                            <Card.Body>
+                                <Card.Title>{value.name} <span class="badge bg-success">{value.onCampus ? "On Campus" : "Off Campus"}</span></Card.Title>
+                                <Card.Text>{value.location}</Card.Text>
+                            </Card.Body>
+                        </Card>
+                    </Col>
 
-                 <Card.Body>
-                     <Card.Title>{value.name} <span class="badge bg-secondary">{value.onCampus?"On Campus":"Off Campus"}</span></Card.Title>
-                     <Card.Text>{value.location}</Card.Text>
-                 </Card.Body>
-             </Card>
-         </Col>
-            
-        ))}
-        </Row>
-    </Container>
-    
-  );
+                ))}
+            </Row>
+        </Container>
+
+    );
 };
 
 export default DiningCard;
