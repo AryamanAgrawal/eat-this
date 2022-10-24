@@ -24,10 +24,10 @@ function DiningCard() {
             <Row guter={40} className="row">
                 {diningData.map((value, index) => (
                     <Col key={index} xs={12} md={6} lg={6}>
-                        <Card class="shadow" >
+                        <Card class="shadow" onClick={() => alert(`Hello from ${value.name}`)}>
                             <Card.Img src={value.image} alt="dining images" />
                             <Card.Body>
-                                <Card.Title>{value.name} <span class="badge bg-success">{value.onCampus ? "On Campus" : "Off Campus"}</span></Card.Title>
+                                <Card.Title><span class="badge bg-success">{value.onCampus ? "On Campus" : "Off Campus"}</span> {value.name} </Card.Title>
                                 <Card.Text>{value.location}</Card.Text>
                             </Card.Body>
                         </Card>
