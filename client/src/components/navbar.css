@@ -32,18 +32,6 @@
     justify-content: flex-end;
 }
 
-.main__navbar-sign {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-}
-
-.main__navbar-sign-navMenu{
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    flex-direction: column;
-}
 
 .nav-item{
     color: white !important;   
@@ -104,6 +92,7 @@
     min-width: 210px;
     border-radius: 5px;
     box-shadow: 0 0 5 rgba(0,0,0,0.2);
+    z-index: 3;
 }
 
 .main__navbar-menu_container p{
@@ -113,4 +102,5 @@
 .main__navbar-menu_container-links-sign {
     display: none;
 }
+
 

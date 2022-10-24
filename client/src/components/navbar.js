@@ -18,6 +18,8 @@ export default function Navbar() {
 
     const isDesktopOrLaptop = useMediaQuery({ minWidth: 1224 })
     const isBigScreen = useMediaQuery({ minWidth: 1824 })
+    const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1224px)' })
+    const isPortrait = useMediaQuery({ query: '(orientation: portrait)' })
 
     //Menu one the Navbar
     const Menu = () => (
@@ -66,7 +68,8 @@ export default function Navbar() {
                         <img src={logo} alt="logo" />
                     </div>
                     <div className='main__navbar-links_container'>
-                        {(isDesktopOrLaptop||isBigScreen) ? <DesktopNav /> : <NavMenu />}
+                        {(isDesktopOrLaptop||isBigScreen)  && <DesktopNav />}
+                        {(isTabletOrMobile||isPortrait) && <NavMenu/>}
                     </div>
                 </div>
             </div>
