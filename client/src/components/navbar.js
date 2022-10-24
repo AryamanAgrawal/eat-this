@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './navbar.css';
 import { RiMenu3Line, RiCloseLine} from 'react-icons/ri';
-import logo from '../assets/logo.svg';
+import logo from '../assets/logo.png';
 
 // We import bootstrap to make our application look better.
 import "bootstrap/dist/css/bootstrap.css";
@@ -64,7 +64,6 @@ export default function Navbar() {
             <div className="main__navbar">
                 <div className="main__navbar-links">
                     <div className="main__navbar-links_logo">
-                        {/* need to change to our logo */}
                         <img src={logo} alt="logo" />
                     </div>
                     <div className='main__navbar-links_container'>
