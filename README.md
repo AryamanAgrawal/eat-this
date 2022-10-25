@@ -8,12 +8,11 @@ CS 320 Project for Dining in Amherst
 - Make sure you're on the right branch you need to work on. Check `Contributing` for more details
 - Go to the project directory, the folder: `eat-this` using Terminal or CMD (this can be done using `cd`)
   - Example `cd` command looks like: `cd ~/dev/git/eat-this` to get into the eat-this folder/directory
-- Go to the server directory: `eat-this/server`
-- Run `node server.js`
+- Run `node server.js` to start the node server
 - This should run your server on port 8000 and connect to the MongoDB database online
   - Make sure to reach out if you have errors or problems, and look for online solutions
 - After getting the Node.js server running and connected with MongoDB, we need to setup the local React environment
-- Go to the `client` folder/directory using the `cd` command on the command-line (Terminal or CMD)
+- Go to the `client` folder/directory using the `cd` command on the command-line (Terminal or CMD): `cd client`
 - Run `npm install`. This should download all the dependencies for the project. Ask if you get errors
 - Run `npm start`. This should start a local app instance that should be connected to your Node.js server
 

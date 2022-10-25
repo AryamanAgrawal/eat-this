@@ -33,7 +33,7 @@ userRoutes.route("/register").post(function (req, res) {
     email: String,
     password: String
 } */
-userRoutes.route("/login").get(function (req, res) {
+userRoutes.route("/login").post(function (req, res) {
     let db_connect = dbo.getDb();
     let myquery = { email: req.body.email };
     db_connect
