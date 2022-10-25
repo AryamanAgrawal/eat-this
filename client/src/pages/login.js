@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styles from "./loginStyles.module.css";
 // import MediaQuery for mobile-responsive;
 import { useMediaQuery } from 'react-responsive';
@@ -8,6 +8,7 @@ const Login = () => {
 
   const isDesktopOrLaptop = useMediaQuery({ minWidth: 1224 })
   const isBigScreen = useMediaQuery({ minWidth: 1824 })
+  const navigate = useNavigate();
 
   const SignUpBox = () => (
     <>
@@ -88,17 +89,14 @@ const Login = () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       });
-      const parseRes = await response.json();
-      if (parseRes.token) {
-        localStorage.setItem("token", parseRes.token);
-        window.location = "/";
-      } else {
-        setError(parseRes);
+      const responseData = await response.json();
+      if (!response.ok) {
+        throw new Error(responseData.message);
       }
+      navigate("/");
     } catch (err) {
-      console.error(err.message);
+      setError(err.message);
     }
-
   };
 
   return (
