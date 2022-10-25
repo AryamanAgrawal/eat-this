@@ -24,6 +24,23 @@ const Signup = () => {
   };
 
   const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await fetch("http://localhost:8000/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+      const responseData = await response.json();
+      if (!response.ok) {
+        throw new Error(responseData.message);
+      }
+      navigate("/");
+    } catch (err) {
+      setError(err.message);
+    }
 
   };
 
