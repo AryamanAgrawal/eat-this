@@ -7,7 +7,7 @@
 	justify-content: center;
 }
 
-.login_form_container_desktop {
+.login_form_container {
 	width: 900px;
 	height: 500px;
 	display: flex;
@@ -16,17 +16,7 @@
 		0px 3px 4px 0px rgb(0 0 0 / 14%), 0px 1px 8px 0px rgb(0 0 0 / 12%);
 }
 
-.login_form_container_mobile {
-	width: 90%;
-	height: 500px;
-	display: flex;
-	flex-direction: column;
-	border-radius: 10px;
-	box-shadow: 0px 3px 3px -2px rgb(0 0 0 / 20%),
-		0px 3px 4px 0px rgb(0 0 0 / 14%), 0px 1px 8px 0px rgb(0 0 0 / 12%);
-}
-
-.login_form_container_desktop .left {
+.login_form_container .left {
 	flex: 2;
 	display: flex;
 	flex-direction: column;
@@ -37,30 +27,15 @@
 	border-bottom-left-radius: 10px;
 }
 
-.login_form_container_mobile .left {
-	flex: 2;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
-	background-color: white;
-	border-top-left-radius: 10px;
-	border-top-right-radius: 10px;
-}
-
 .form_container {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	width: 90%
 }
 
 .form_container h1 {
 	font-size: 40px;
-	margin-top: 0;
-}
-
-.login_form_container_mobile h1 {
-	font-size: 20px;
 	margin-top: 0;
 }
 
@@ -75,16 +50,6 @@
 	font-size: 14px;
 }
 
-.login_form_container_mobile input{
-	outline: none;
-	border: none;
-	width: 320px;
-	padding: 15px;
-	border-radius: 10px;
-	background-color: #edf5f3;
-	margin: 5px 0;
-	font-size: 14px;
-}
 
 .error_msg {
 	width: 370px;
@@ -108,11 +73,6 @@
 	border-bottom-right-radius: 10px;
 }
 
-.login_form_container_mobile .right {
-	border-bottom-left-radius: 10px;
-	border-bottom-right-radius: 10px;
-}
-
 .right h1 {
 	margin-top: 0;
 	color: white;
@@ -120,12 +80,6 @@
 	align-self: center;
 }
 
-.login_form_container_mobile .right h1 {
-	margin-top: 0;
-	color: white;
-	font-size: 20px;
-	align-self: center;
-}
 
 .white_btn,
 .red_btn {
@@ -145,4 +99,40 @@
 	background-color: #881c1c;
 	color: white;
 	margin: 10px;
+}
+
+@media only screen and (max-width: 1200px) {
+	.login_form_container {
+		width: 90%;
+		height: 600px;
+		flex-direction: column;
+	}
+
+	.login_form_container .left {
+		border-bottom-left-radius: 0px;
+		border-top-left-radius: 10px;
+		border-top-right-radius: 10px;
+	}
+
+	.login_form_container{
+		font-size: 20px;
+	}
+
+	.form_container h1 {
+		font-size: 20px;
+	}
+
+	.login_form_container input{
+		width: 90%;
+	}
+
+	.login_form_container .right {
+		border-top-right-radius: 0px;
+		border-bottom-left-radius: 10px;
+		border-bottom-right-radius: 10px;
+	}
+
+	.login_form_container .right h1 {
+		font-size: 20px
+	}
 }
