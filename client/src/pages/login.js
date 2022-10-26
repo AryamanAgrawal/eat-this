@@ -19,17 +19,13 @@ const Login = () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       });
-      const parseRes = await response.json();
-      if (parseRes.token) {
-        localStorage.setItem("token", parseRes.token);
-        window.location = "/";
-      } else {
-        setError(parseRes);
+      const responseData = await response.json();
+      if (!response.ok) {
+        throw new Error(responseData.message);
       }
     } catch (err) {
-      console.error(err.message);
+      setError(err.message);
     }
-
   };
 
   return (
