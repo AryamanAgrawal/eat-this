@@ -1,29 +1,36 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import styles from "./loginStyles.module.css";
-// import MediaQuery for mobile-responsive;
-import { useMediaQuery } from 'react-responsive';
 
 const Login = () => {
 
-  const isDesktopOrLaptop = useMediaQuery({ minWidth: 1224 })
-  const isBigScreen = useMediaQuery({ minWidth: 1824 })
+  const [data, setData] = useState({ email: "", password: "" });
+  const [error, setError] = useState("");
 
-  const SignUpBox = () => (
-    <>
-        <div className={styles.right}>
-          <h1>New Here ?</h1>
-          <Link to="/signup">
-            <button type="button" className={styles.white_btn}>
-              Sign Up
-            </button>
-          </Link>
-        </div>
-    </>
-  )
+  const handleChange = ({ currentTarget: input }) => {
+    setData({ ...data, [input.name]: input.value });
+  };
 
-  const LoginForm = () => (
-    <>
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await fetch("https://umasseatthis.herokuapp.com/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+      const responseData = await response.json();
+      if (!response.ok) {
+        throw new Error(responseData.message);
+      }
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+
+  return (
+    <div className={styles.login_container}>
+      <div className={styles.login_form_container}>
         <div className={styles.left}>
           <form className={styles.form_container} onSubmit={handleSubmit}>
             <h1>Login to Your Account</h1>
@@ -51,42 +58,16 @@ const Login = () => {
             </button>
           </form>
         </div>
-    </>
-  );
 
-  const DesktopView = () => (
-    <>
-      <div className={styles.login_form_container_desktop}>
-        <LoginForm/>
-        <SignUpBox/>
+        <div className={styles.right}>
+          <h1>New Here ?</h1>
+          <Link to="/signup">
+            <button type="button" className={styles.white_btn}>
+              Sign Up
+            </button>
+          </Link>
+        </div>
       </div>
-    </>
-  )
-  
-  const MobileView = () => (
-    <>
-      <div className={styles.login_form_container_mobile}>
-        <LoginForm/>
-        <SignUpBox/>
-      </div>
-    </>
-  );
-
-
-  const [data, setData] = useState({ email: "", password: "" });
-  const [error, setError] = useState("");
-
-  const handleChange = ({ currentTarget: input }) => {
-    setData({ ...data, [input.name]: input.value });
-  };
-
-  const handleSubmit = async (e) => {
-
-  };
-
-  return (
-    <div className={styles.login_container}>
-      {(isDesktopOrLaptop||isBigScreen)?<DesktopView/>:<MobileView/>}
     </div>
   );
 };
