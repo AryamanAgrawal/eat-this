@@ -2,6 +2,7 @@ const express = require("express");
 const userRoutes = express.Router();
 const dbo = require("../db/conn");
 const bcrypt = require("bcrypt");
+const ObjectId = require("mongodb").ObjectId;
 
 /** Register a user */
 /** request.body = {
@@ -82,14 +83,14 @@ userRoutes.route("/user/:id").get(function (req, res) {
  *      password: String, // not possible
  *   }
  * } */
-userRoutes.route("/dining/update/:id").post(function (req, res) {
+userRoutes.route("/user/update/:id").post(function (req, res) {
     let db_connect = dbo.getDb();
     let myquery = { _id: ObjectId(req.params.id) };
     let newvalues = {
         $set: {
-            name: req.body.dinigLocation.name,
-            email: req.body.dinigLocation.email,
-            password: req.body.dinigLocation.password,
+            name: req.body.user.name,
+            email: req.body.user.email,
+            password: req.body.user.password,
         },
     };
     db_connect
