@@ -15,7 +15,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("https://umasseatthis.herokuapp.com/login", {
+      const response = await fetch("http://localhost:8000/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
@@ -24,9 +24,10 @@ const Login = () => {
       if (!response.ok) {
         throw new Error(responseData.message);
       }
-      localStorage.setItem("userData", responseData.message);
-      console.log(responseData);
+      localStorage.setItem("userId", responseData.id);
+      localStorage.setItem("token", responseData.token);
       navigate("/");
+      window.location.reload();
     } catch (err) {
       setError(err.message);
     }

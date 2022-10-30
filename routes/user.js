@@ -27,7 +27,8 @@ userRoutes.route("/register").post(function (req, res) {
             if (err) {
                 res.status(404).json({ message: "Registration failed", err });
             };
-            res.status(200).json({ message: "Registration successful", result });
+            const token = jwt.sign({ }, JWT_SECRET);
+            res.status(200).json({ message: "Registration successful", result, token: token });
         })
     })
 });
@@ -50,7 +51,7 @@ userRoutes.route("/login").post(function (req, res) {
                 bcrypt.compare(req.body.password, doc.password, function (err, result) {
                     if (result) {
                         const token = jwt.sign({ }, JWT_SECRET);
-                        res.status(200).json({ message: { message: "Login Successful", firstName: doc.firstName, lastName: doc.lastName }, result, data: token });
+                        res.status(200).json({ message:"Login Successful", token: token , id: doc._id, result });
                     } else {
                         res.status(401).json({ message: "Login Unsuccessful", err });
                     }

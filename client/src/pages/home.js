@@ -2,11 +2,13 @@ import React from "react";
 import DiningCard from "../components/diningCard"
 
 const Home = () => {
+
+  
   return (
     <div>
-      {localStorage.getItem("userData") ? (<h1 style={{ "textAlign": "center" }}>
-        Welcome to Umass Eat This!
-      </h1>):
+      {localStorage.getItem("token") ? <h1 style={{ "textAlign": "center" }}>
+        Logged In
+      </h1>:
       (<h1 style={{ "textAlign": "center" }}>
         Home Page
       </h1>)}

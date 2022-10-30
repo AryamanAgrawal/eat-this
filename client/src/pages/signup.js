@@ -20,7 +20,7 @@ const Signup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("https://umasseatthis.herokuapp.com/register", {
+      const response = await fetch("http://localhost:8000/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -31,8 +31,10 @@ const Signup = () => {
       if (!response.ok) {
         throw new Error(responseData.message);
       }
-      localStorage.setItem("userData", responseData.message);
+      localStorage.setItem("userId", responseData.result.insertedId);
+      localStorage.setItem("token", responseData.token);
       navigate("/");
+      window.location.reload();
     } catch (err) {
       setError(err.message);
     }
