@@ -3,6 +3,9 @@ const userRoutes = express.Router();
 const dbo = require("../db/conn");
 const bcrypt = require("bcrypt");
 const ObjectId = require("mongodb").ObjectId;
+const jwt = require("jsonwebtoken");
+
+const JWT_SECRET = "elifbf;wcuh3ubcqjdnasodue@#$^^U*M^UN>>>>AWFEFibeo9uh()!@#$@#cqcewdiwebf";
 
 /** Register a user */
 /** request.body = {
@@ -46,7 +49,8 @@ userRoutes.route("/login").post(function (req, res) {
             if (doc) {
                 bcrypt.compare(req.body.password, doc.password, function (err, result) {
                     if (result) {
-                        res.status(200).json({ message: { message: "Login Successful", firstName: doc.firstName, lastName: doc.lastName }, result });
+                        const token = jwt.sign({ }, JWT_SECRET);
+                        res.status(200).json({ message: { message: "Login Successful", firstName: doc.firstName, lastName: doc.lastName }, result, data: token });
                     } else {
                         res.status(401).json({ message: "Login Unsuccessful", err });
                     }

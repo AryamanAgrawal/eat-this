@@ -31,6 +31,7 @@ const Signup = () => {
       if (!response.ok) {
         throw new Error(responseData.message);
       }
+      localStorage.setItem("userData", responseData.message);
       navigate("/");
     } catch (err) {
       setError(err.message);

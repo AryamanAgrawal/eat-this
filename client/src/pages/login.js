@@ -1,11 +1,12 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styles from "./loginStyles.module.css";
 
 const Login = () => {
 
   const [data, setData] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
+  const navigate = useNavigate();
 
   const handleChange = ({ currentTarget: input }) => {
     setData({ ...data, [input.name]: input.value });
@@ -23,6 +24,9 @@ const Login = () => {
       if (!response.ok) {
         throw new Error(responseData.message);
       }
+      localStorage.setItem("userData", responseData.message);
+      console.log(responseData);
+      navigate("/");
     } catch (err) {
       setError(err.message);
     }
