@@ -46,7 +46,7 @@ userRoutes.route("/login").post(function (req, res) {
             if (doc) {
                 bcrypt.compare(req.body.password, doc.password, function (err, result) {
                     if (result) {
-                        res.status(200).json({ message: "Login Successful", result });
+                        res.status(200).json({ message: { message: "Login Successful", firstName: doc.firstName, lastName: doc.lastName }, result });
                     } else {
                         res.status(401).json({ message: "Login Unsuccessful", err });
                     }
