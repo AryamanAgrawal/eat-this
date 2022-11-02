@@ -90,7 +90,7 @@ userRoutes.route("/user/:id").get(function (req, res) {
  *      email: String,
  *      password: String, // not possible
  * } */
-userRoutes.route("/user/:id").post(function (req, res) {
+userRoutes.route("/user/:id/edit").post(function (req, res) {
     let db_connect = dbo.getDb();
     let myquery = { _id: ObjectId(req.params.id) };
     let newvalues = {
@@ -113,7 +113,7 @@ userRoutes.route("/user/:id").post(function (req, res) {
 
 /** Delete a single user document by id */
 /** request.body = {} */
-userRoutes.route("/user/:id").delete((req, res) => {
+userRoutes.route("/user/:id/delete").delete((req, res) => {
     let db_connect = dbo.getDb();
     let myquery = { _id: ObjectId(req.params.id) };
     db_connect.collection("users").deleteOne(myquery, function (err, obj) {
@@ -158,9 +158,9 @@ userRoutes.route("/user/preferences/").post((req, res) => {
  *     ingredients: ["Chicken", "Tomato", "Fish"]
  * } 
  */
-userRoutes.route("/user/preferences/:id").post((req, res) => {
+userRoutes.route("/user/preferences/:id/edit").post((req, res) => {
     let db_connect = dbo.getDb();
-    let myquery = { _id: ObjectId(req.params.id) };
+    let myquery = { userId: req.params.userId };
     let newvalues = {
         $set: {
             userId: req.body.userId,
@@ -184,7 +184,7 @@ userRoutes.route("/user/preferences/:id").post((req, res) => {
 /** request.body = {} */
 userRoutes.route("/user/preferences/:id").get(function (req, res) {
     let db_connect = dbo.getDb();
-    let myquery = { _id: ObjectId(req.params.id) };
+    let myquery = { userId: req.params.userId };
     db_connect
         .collection("preferences")
         .findOne(myquery, function (err, result) {

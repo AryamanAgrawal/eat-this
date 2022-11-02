@@ -26,6 +26,7 @@ const Login = () => {
       if (!response.ok) {
         throw new Error(responseData.message);
       }
+      console.log(typeof responseData.id);
       localStorage.setItem("userId", responseData.id);
       localStorage.setItem("token", responseData.token);
       setLoading(false);
