@@ -6,8 +6,8 @@ const dbo = require("../db/conn");
 /** request.body = {
     name: String,
     location: {
-        lat: Double,
-        lng: Double,
+        latitude: Double,
+        longitude: Double,
         address: String
     },
     onCampus: Boolean,
@@ -69,8 +69,8 @@ diningRoutes.route("/dining/:id").get(function (req, res) {
 /** request.body = {
  *     name: String,
  *     location: {
- *          lat: Double,
- *          lng: Double,
+ *          latitude: Double,
+ *          longitude: Double,
  *          address: String
  *      },
  *     onCampus: Boolean,
