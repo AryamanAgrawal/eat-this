@@ -2,7 +2,7 @@ import {React, useCallback} from "react";
 
 import { StylesManager, Model } from "survey-core";
 import { Survey } from "survey-react-ui";
-import "./index.css";
+
 import "survey-core/modern.css";
 import "survey-core/defaultV2.css";
 
