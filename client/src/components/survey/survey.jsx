@@ -33,6 +33,7 @@ function SurveyComponent() {
       allergens: sender.data["allergens"],
       ingredients: sender.data["ingredients"],
     }
+    console.log(data)
     saveSurveyResults(
       "http://localhost:8000/user/preferences",
       data
