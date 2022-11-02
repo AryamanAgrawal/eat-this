@@ -27,7 +27,7 @@ userRoutes.route("/register").post(function (req, res) {
             if (err) {
                 res.status(404).json({ message: "Registration failed", err });
             };
-            const token = jwt.sign({ }, JWT_SECRET);
+            const token = jwt.sign({}, JWT_SECRET);
             res.status(200).json({ message: "Registration successful", result, token: token });
         })
     })
@@ -50,8 +50,8 @@ userRoutes.route("/login").post(function (req, res) {
             if (doc) {
                 bcrypt.compare(req.body.password, doc.password, function (err, result) {
                     if (result) {
-                        const token = jwt.sign({ }, JWT_SECRET);
-                        res.status(200).json({ message:"Login Successful", token: token , id: doc._id, result });
+                        const token = jwt.sign({}, JWT_SECRET);
+                        res.status(200).json({ message: "Login Successful", token: token, id: doc._id, result });
                     } else {
                         res.status(401).json({ message: "Login Unsuccessful", err });
                     }
@@ -122,6 +122,30 @@ userRoutes.route("/user/:id").delete((req, res) => {
             throw err;
         }
         res.status(200).json({ message: "Success: User deleted", obj });
+    });
+});
+
+/** Add preferences for a user */
+/** request.body = {
+ *    user: email: String,
+ *    preferredLocation: ["Hampshire Dining Commons", "Franklin Dining Commons"],
+ *    allergens: ["Peanuts", "Tree Nuts"],
+ *    ingredients: ["Chicken", "Tomato", "Fish"]
+ * } */
+userRoutes.route("/user/preferences/").post((req, res) => {
+    let db_connect = dbo.getDb();
+    let myobj = {
+        user: req.body.user,
+        preferredLocation: req.body.preferredLocation,
+        allergens: req.body.allergens,
+        ingredients: req.body.ingredients,
+    };
+    db_connect.collection("preferences").insertOne(myobj, function (err, result) {
+        if (err) {
+            res.status(404).json({ message: "Failed to add user preferences", err });
+        };
+        const token = jwt.sign({}, JWT_SECRET);
+        res.status(200).json({ message: "Added user preferences successful", result, token: token });
     });
 });
 
