@@ -16,6 +16,7 @@ const JWT_SECRET = "elifbf;wcuh3ubcqjdnasodue@#$^^U*M^UN>>>>AWFEFibeo9uh()!@#$@#
 } */
 userRoutes.route("/register").post(function (req, res) {
     let db_connect = dbo.getDb();
+    let myquery = { email: req.body.email };
     bcrypt.hash(req.body.password, 10, function (err, hash) {
         let myobj = {
             firstName: req.body.firstName,
@@ -23,6 +24,12 @@ userRoutes.route("/register").post(function (req, res) {
             email: req.body.email,
             password: hash,
         };
+        db_connect.collection("users").findOne(myquery, function (err, doc) {
+            if (doc) {
+                res.status(404).json({ message: "User already exists", err });
+            }
+            return;
+        });
         db_connect.collection("users").insertOne(myobj, function (err, result) {
             if (err) {
                 res.status(404).json({ message: "Registration failed", err });
@@ -61,9 +68,7 @@ userRoutes.route("/login").post(function (req, res) {
 });
 
 /** Fetch a single user by id */
-/** request.body = {
- *    id: id
- * } */
+/** request.body = {} */
 userRoutes.route("/user/:id").get(function (req, res) {
     let db_connect = dbo.getDb();
     let myquery = { _id: ObjectId(req.params.id) };
@@ -107,9 +112,7 @@ userRoutes.route("/user/:id").post(function (req, res) {
 });
 
 /** Delete a single user document by id */
-/** request.body = {
- *    id: _id
- * } */
+/** request.body = {} */
 userRoutes.route("/user/:id").delete((req, res) => {
     let db_connect = dbo.getDb();
     let myquery = { _id: ObjectId(req.params.id) };
@@ -177,5 +180,20 @@ userRoutes.route("/user/preferences/:id").post((req, res) => {
         });
 });
 
+/** Fetch a single user by id */
+/** request.body = {} */
+userRoutes.route("/user/preferences/:id").get(function (req, res) {
+    let db_connect = dbo.getDb();
+    let myquery = { _id: ObjectId(req.params.id) };
+    db_connect
+        .collection("preferences")
+        .findOne(myquery, function (err, result) {
+            if (err) {
+                res.status(404).json({ message: "Failed to fetch user preferences", err });
+                throw err;
+            }
+            res.status(200).json({ message: "Successfully fetched user preferences", result });
+        });
+});
 
 module.exports = userRoutes;
