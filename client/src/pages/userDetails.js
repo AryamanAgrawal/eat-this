@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Survey from "../components/survey/survey";
 
 export default class UserDetails extends Component {
   constructor(props) {
@@ -27,10 +28,16 @@ export default class UserDetails extends Component {
   }
   render() {
     return localStorage.getItem("token") ? (
-      <div>
-        Name<h1>{this.state.userData.firstName}</h1>
-        Email <h1>{this.state.userData.email}</h1>
-      </div>
+      <>
+        <div>
+          Name<h1>{this.state.userData.firstName}</h1>
+          Email <h1>{this.state.userData.email}</h1>
+          <h1 style={{ textAlign: "center", marginTop: 25 }}>
+            Edit Your Preferences
+          </h1>
+        </div>
+        <Survey />
+      </>
     ) : (
       <div>
         <h1>Log in to access</h1>

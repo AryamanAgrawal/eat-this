@@ -39,7 +39,7 @@ export default function Navbar() {
     localStorage.removeItem("userId");
     localStorage.removeItem("token");
     window.location.reload();
-  }
+  };
 
   const DesktopNav = () => (
     <>
@@ -87,16 +87,26 @@ export default function Navbar() {
           <div className="main__navbar-menu_container scale-up-center">
             <div className="main__navbar-menu_container-links">
               <Menu />
-              <NavLink className="nav-item" to="/login">
-                <button className="login" type="button">
-                  Log in
-                </button>
-              </NavLink>
-              <NavLink className="nav-item" to="/signup">
-                <button className="signup" type="button">
-                  Sign up
-                </button>
-              </NavLink>
+              {localStorage.getItem("token") ? (
+                <div className="nav-item">
+                  <button className="login" type="button" onClick={Logout}>
+                    Logout
+                  </button>
+                </div>
+              ) : (
+                <>
+                  <NavLink className="nav-item" to="/login">
+                    <button className="login" type="button">
+                      Log in
+                    </button>
+                  </NavLink>
+                  <NavLink className="nav-item" to="/signup">
+                    <button className="signup" type="button">
+                      Sign up
+                    </button>
+                  </NavLink>
+                </>
+              )}
             </div>
           </div>
         )}
