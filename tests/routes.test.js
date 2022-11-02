@@ -1,19 +1,43 @@
-// const request = require('supertest')
-// const app = require('../server')
-// describe('Post Endpoints', () => {
-//     it('should create a new post', async () => {
-//         const res = await request(app)
-//             .post('/api/posts')
-//             .send({
-//                 userId: 1,
-//                 title: 'test is cool',
-//             })
-//         expect(res.statusCode).toEqual(201)
-//         expect(res.body).toHaveProperty('post')
-//     })
-// })
-describe('Sample Test 2', () => {
-    it('should test that true === true', () => {
-        expect(true).toBe(true)
+const { ObjectId } = require('bson');
+const request = require('supertest')
+url = "https://umasseatthis.herokuapp.com";
+
+describe('test /resgister endpoint with good credentials', () => {
+    it('should create a new post', async () => {
+        const response = await request(url)
+            .post('/register')
+            .send({
+                firstName: 'Alex',
+                lastName: 'Dhima',
+                email: 'adhima@mail.com',
+                password: '1234'
+            })
+        expect(response.statusCode).toEqual(200);
     })
 })
+
+describe('test /login endpoint with correct login', () => {
+    it('should create a new post', async () => {
+        const response = await request(url)
+            .post('/login')
+            .send({
+                email: 'adhima@mail.com',
+                password: '1234'
+            })
+        expect(response.statusCode).toEqual(200);
+    })
+})
+
+describe('test /login endpoint with incorrect login', () => {
+    it('should create a new post', async () => {
+        const response = await request(url)
+            .post('/login')
+            .send({
+                email: 'adhima@mail.com',
+                password: 'wrongpassword'
+            })
+        expect(response.statusCode).toEqual(401);
+    })
+})
+
+
