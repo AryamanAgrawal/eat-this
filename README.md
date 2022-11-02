@@ -3,6 +3,11 @@ CS 320 Project for Dining in Amherst
 
 [![Node.js CI Checks](https://github.com/AryamanAgrawal/eat-this/actions/workflows/node.js.yml/badge.svg?branch=develop)](https://github.com/AryamanAgrawal/eat-this/actions/workflows/node.js.yml)
 
+## Test Users
+- email: test1@gmail.com, password: test
+
+
+
 ## Build Process
 - Install `git`, `npm`, `node` on your local machine. Check their validity on the command-line
 - Clone the repository
