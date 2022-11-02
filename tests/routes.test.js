@@ -12,3 +12,8 @@
 //         expect(res.body).toHaveProperty('post')
 //     })
 // })
+describe('Sample Test 2', () => {
+    it('should test that true === true', () => {
+        expect(true).toBe(true)
+    })
+})
