@@ -81,14 +81,11 @@ userRoutes.route("/user/:id").get(function (req, res) {
 
 /** Update a single user by id */
 /** request.body = {
- *    id: id
- *    user: {
  *      name: String,
  *      email: String,
  *      password: String, // not possible
- *   }
  * } */
-userRoutes.route("/user/update/:id").post(function (req, res) {
+userRoutes.route("/user/:id").post(function (req, res) {
     let db_connect = dbo.getDb();
     let myquery = { _id: ObjectId(req.params.id) };
     let newvalues = {
@@ -111,7 +108,7 @@ userRoutes.route("/user/update/:id").post(function (req, res) {
 
 /** Delete a single user document by id */
 /** request.body = {
- *    id: id
+ *    id: _id
  * } */
 userRoutes.route("/user/:id").delete((req, res) => {
     let db_connect = dbo.getDb();
@@ -127,15 +124,15 @@ userRoutes.route("/user/:id").delete((req, res) => {
 
 /** Add preferences for a user */
 /** request.body = {
- *    user: email: String,
- *    preferredLocation: ["Hampshire Dining Commons", "Franklin Dining Commons"],
- *    allergens: ["Peanuts", "Tree Nuts"],
- *    ingredients: ["Chicken", "Tomato", "Fish"]
+ *      userId: String,        
+ *      preferredLocation: ["Hampshire Dining Commons", "Franklin Dining Commons"],
+ *      allergens: ["Peanuts", "Tree Nuts"],
+ *      ingredients: ["Chicken", "Tomato", "Fish"]
  * } */
 userRoutes.route("/user/preferences/").post((req, res) => {
     let db_connect = dbo.getDb();
     let myobj = {
-        user: req.body.user,
+        userId: req.body.userId,
         preferredLocation: req.body.preferredLocation,
         allergens: req.body.allergens,
         ingredients: req.body.ingredients,
@@ -147,6 +144,37 @@ userRoutes.route("/user/preferences/").post((req, res) => {
         const token = jwt.sign({}, JWT_SECRET);
         res.status(200).json({ message: "Added user preferences successful", result, token: token });
     });
+});
+
+/** Update preferences for a user */
+/** 
+ * request.body = {
+ *     userId: String,
+ *     preferredLocation: ["Hampshire Dining Commons", "Franklin Dining Commons"],
+ *     allergens: ["Peanuts", "Tree Nuts"],
+ *     ingredients: ["Chicken", "Tomato", "Fish"]
+ * } 
+ */
+userRoutes.route("/user/preferences/:id").post((req, res) => {
+    let db_connect = dbo.getDb();
+    let myquery = { _id: ObjectId(req.params.id) };
+    let newvalues = {
+        $set: {
+            userId: req.body.userId,
+            preferredLocation: req.body.preferredLocation,
+            allergens: req.body.allergens,
+            ingredients: req.body.ingredients,
+        },
+    };
+    db_connect
+        .collection("preferences")
+        .updateOne(myquery, newvalues, function (err, result) {
+            if (err) {
+                res.status(404).json({ message: "Failed to update user preferences", err });
+                throw err;
+            }
+            res.status(200).json({ message: "Successfully updated user preferences", result });
+        });
 });
 
 
