@@ -6,7 +6,7 @@ CS 320 Project for Dining in Amherst
 
 ## Test Users
 - email: test1@gmail.com, password: test
-
+- email: aryaman@gmail.com, password: aryaman
 
 
 ## Build Process
