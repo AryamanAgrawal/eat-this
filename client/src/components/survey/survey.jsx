@@ -37,7 +37,7 @@ function SurveyComponent({type}) {
     } else {
       saveSurveyResults("http://localhost:8000/user/preferences", data);
     }
-  }, [type]);
+  },[type] );
 
   const survey = new Model(json);
   survey.onComplete.add(surveyComplete);

@@ -42,7 +42,7 @@ export default class UserDetails extends Component {
         .then((res) => res.json())
         .then((data) => {
           this.setState({ preferenceData: data.result });
-        });
+        });    
     }
   }
   render() {

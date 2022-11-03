@@ -160,7 +160,7 @@ userRoutes.route("/user/preferences/").post((req, res) => {
  */
 userRoutes.route("/user/preferences/:id/edit").post((req, res) => {
     let db_connect = dbo.getDb();
-    let myquery = { userId: req.params.userId };
+    let myquery = { userId: req.params.id };
     let newvalues = {
         $set: {
             userId: req.body.userId,
@@ -184,7 +184,7 @@ userRoutes.route("/user/preferences/:id/edit").post((req, res) => {
 /** request.body = {} */
 userRoutes.route("/user/preferences/:id").get(function (req, res) {
     let db_connect = dbo.getDb();
-    let myquery = { userId: req.params.userId };
+    let myquery = { userId: req.params.id };
     db_connect
         .collection("preferences")
         .findOne(myquery, function (err, result) {
