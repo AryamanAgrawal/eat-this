@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import styles from "./loginStyles.module.css";
 
 const Login = () => {
+
   const [data, setData] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
 
@@ -11,7 +12,20 @@ const Login = () => {
   };
 
   const handleSubmit = async (e) => {
-
+    e.preventDefault();
+    try {
+      const response = await fetch("https://umasseatthis.herokuapp.com/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+      const responseData = await response.json();
+      if (!response.ok) {
+        throw new Error(responseData.message);
+      }
+    } catch (err) {
+      setError(err.message);
+    }
   };
 
   return (
@@ -44,6 +58,7 @@ const Login = () => {
             </button>
           </form>
         </div>
+
         <div className={styles.right}>
           <h1>New Here ?</h1>
           <Link to="/signup">

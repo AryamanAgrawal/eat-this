@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './navbar.css';
 import { RiMenu3Line, RiCloseLine} from 'react-icons/ri';
-import logo from '../assets/logo.svg';
+import logo from '../assets/logo.png';
 
 // We import bootstrap to make our application look better.
 import "bootstrap/dist/css/bootstrap.css";
@@ -18,6 +18,8 @@ export default function Navbar() {
 
     const isDesktopOrLaptop = useMediaQuery({ minWidth: 1224 })
     const isBigScreen = useMediaQuery({ minWidth: 1824 })
+    const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1224px)' })
+    const isPortrait = useMediaQuery({ query: '(orientation: portrait)' })
 
     //Menu one the Navbar
     const Menu = () => (
@@ -62,11 +64,11 @@ export default function Navbar() {
             <div className="main__navbar">
                 <div className="main__navbar-links">
                     <div className="main__navbar-links_logo">
-                        {/* need to change to our logo */}
                         <img src={logo} alt="logo" />
                     </div>
                     <div className='main__navbar-links_container'>
-                        {(isDesktopOrLaptop||isBigScreen) ? <DesktopNav /> : <NavMenu />}
+                        {(isDesktopOrLaptop||isBigScreen)  && <DesktopNav />}
+                        {(isTabletOrMobile||isPortrait) && <NavMenu/>}
                     </div>
                 </div>
             </div>

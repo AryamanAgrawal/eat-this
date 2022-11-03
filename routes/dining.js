@@ -5,7 +5,11 @@ const dbo = require("../db/conn");
 /** Add a dining location */
 /** request.body = {
     name: String,
-    location: String,
+    location: {
+        lat: Double,
+        lng: Double,
+        address: String
+    },
     onCampus: Boolean,
     image: String
 } */
@@ -68,12 +72,16 @@ diningRoutes.route("/dining/:id").get(function (req, res) {
  *    id: id
  *    diningLocation: {
  *      name: String,
- *      location: String,
+ *      location: {
+ *           lat: Double,
+ *           lng: Double,
+ *           address: String
+ *       },
  *      onCampus: Boolean,
  *      image: String
  *   }
  * } */
-diningRoutes.route("/dining/update/:id").post(function (req, res) {
+diningRoutes.route("/dining/:id").post(function (req, res) {
     let db_connect = dbo.getDb();
     let myquery = { _id: ObjectId(req.params.id) };
     let newvalues = {

@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import styles from "./signupStyles.module.css";
 
 const Signup = () => {
+
   const [data, setData] = useState({
     firstName: "",
     lastName: "",
@@ -17,6 +18,23 @@ const Signup = () => {
   };
 
   const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await fetch("https://umasseatthis.herokuapp.com/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+      const responseData = await response.json();
+      if (!response.ok) {
+        throw new Error(responseData.message);
+      }
+      navigate("/");
+    } catch (err) {
+      setError(err.message);
+    }
 
   };
 
@@ -31,6 +49,7 @@ const Signup = () => {
             </button>
           </Link>
         </div>
+
         <div className={styles.right}>
           <form className={styles.form_container} onSubmit={handleSubmit}>
             <h1>Create Account</h1>
