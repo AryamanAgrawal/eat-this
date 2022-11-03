@@ -109,7 +109,25 @@ diningRoutes.route("/dining/:id").post(function (req, res) {
  * } */
 diningRoutes.route("/dining/:id").delete((req, res) => {
     let db_connect = dbo.getDb();
-    let myquery = { _id: ObjectId(req.params.id) };
+   
+
+/** Populate DB with Menus from scrape */
+diningRoutes.route("/dining/menu").post(function (req, res) {
+    let db_connect = dbo.getDb();
+        let myquery = {
+            name: req.body.name,
+            location: req.body.location,
+            onCampus: req.body.onCampus,
+            image: req.body.image,
+        };
+        db_connect.collection("menus").insertOne(myobj, function (err, result) {
+            if (err) {
+                res.status(404).json({ message: "Dining location insert failed", err });
+            };
+            res.status(200).json({ message: "Success: Dining location inserted", result });
+        })
+});
+ let myquery = { _id: ObjectId(req.params.id) };
     db_connect.collection("diningLocations").deleteOne(myquery, function (err, obj) {
         if (err) {
             res.status(404).json({ message: "Failed to delete dining location", err });

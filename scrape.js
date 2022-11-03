@@ -8,13 +8,13 @@ const cron = require('node-cron');
 const fs = require('fs');
 
 const dining = ['berkshire', 'hampshire', 'worcester', 'franklin'];
-const mealtime = ['#breakfast_men', '#lunch_menu', '#dinner_menu', '#latenight_menu', '#grabngo'];
-
+const mealtime = ['#breakfast_menu', '#lunch_menu', '#dinner_menu', '#latenight_menu', '#grabngo'];
+const menu = {};
 
 (async () => {
-    let menu = {};
+    //let menu = {};
     let dc_time = '';
-    cron.schedule('0 1 * * *', async() => { //disable for now
+    //cron.schedule('10 0 * * *', async() => { //disable for now
         dining.map(async (location) => {
         let url = 'https://umassdining.com/locations-menus/' + location + '/menu';      
             let response = await rp(url);
@@ -30,7 +30,7 @@ const mealtime = ['#breakfast_men', '#lunch_menu', '#dinner_menu', '#latenight_m
                         let dish = {}; // {dishname: [ingredient, allergens, nutritionValues]}
                         let dishname = dish_attributes['data-dish-name'].toString();
                         let ingredient = dish_attributes['data-ingredient-list'].toString();
-                        let allergens = dish_attributes['data-allergens'].toString();
+                        let allergens = dish_attributes['data-allergens'].toString().split(',');
                         let nutritionValues = [
                             dish_attributes['data-calories'].toString(),
                             dish_attributes['data-total-fat'].toString(),
@@ -48,17 +48,32 @@ const mealtime = ['#breakfast_men', '#lunch_menu', '#dinner_menu', '#latenight_m
                     menu[dc_time] = dishlist;
                     //{worcester#lunch_menu:[{dishname: [ingredient, allergens, nutritionValues]},
                     //                       {dishname: [ingredient, allergens, nutritionValues]},...]}
-
+                    //console.log(menu);
+                    fs.writeFileSync("dishdata.json", JSON.stringify(menu));
                 }
             });
 
         });
-        console.log(menu);
-        fs.writeFileSync("dishdata.json", JSON.stringify(menu));
-    });
 
+        try {
+            const response = await fetch('./dishdata.json').then((response) => response.json()).then((json) => console.log(json));;
+          } catch (err) {
+            console.log(err);
+          }
 })();
-
 
 module.exports = router;
 
+//1) search by dining (aka worcester -> breakfast, lunch, dinner, late night, grab and go)
+//2) populate "menus" collection
+        // Location: dining location
+        // FoodId:
+        // MealTime: 
+        // Name of Dish: 
+//3) populate "foodItems" collection
+        //ingredients:
+        //allergens:
+        //nutrionalValue:
+        //calories:
+        //cuisineType:
+        //food_id: same as above
