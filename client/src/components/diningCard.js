@@ -44,7 +44,7 @@ function DiningCard() {
                             <Card onClick={() => { setSelectedInd(index); setIsOpen(true); }}>
                                 <Card.Img src={value.image} alt="dining images" />
                                 <Card.Body>
-                                    <Card.Title className='card title'><span className="badge bg-success">{value.onCampus ? "On Campus" : "Off Campus"}</span>{value.name} </Card.Title>
+                                    <Card.Title className='cardTitle'><span className="badge bg-success">{value.onCampus ? "On Campus" : "Off Campus"}</span> <p>{value.name}</p> </Card.Title>
                                     <Card.Text className="cardlocation">{value.location}</Card.Text>
 
                                 </Card.Body>
