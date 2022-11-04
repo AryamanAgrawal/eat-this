@@ -7,7 +7,7 @@ import { Route, Routes } from "react-router-dom";
 import Navbar from "./components/navbar"
 import Home from './pages/home';
 import Dining from './pages/dining';
-import User from './pages/user';
+import User from './pages/userDetails';
 import LogIn from './pages/login';
 import SignUp from './pages/signup';
 
