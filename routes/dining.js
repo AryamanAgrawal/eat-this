@@ -6,8 +6,8 @@ const dbo = require("../db/conn");
 /** request.body = {
     name: String,
     location: {
-        lat: Double,
-        lng: Double,
+        latitude: Double,
+        longitude: Double,
         address: String
     },
     onCampus: Boolean,
@@ -49,9 +49,7 @@ diningRoutes.route("/dining").get(function (req, res) {
 });
 
 /** Fetch a single dining document by id */
-/** request.body = {
- *    id: id
- * } */
+/** request.body = {} */
 diningRoutes.route("/dining/:id").get(function (req, res) {
     let db_connect = dbo.getDb();
     let myquery = { _id: ObjectId(req.params.id) };
@@ -69,17 +67,14 @@ diningRoutes.route("/dining/:id").get(function (req, res) {
 
 /** Update a single dining document by id */
 /** request.body = {
- *    id: id
- *    diningLocation: {
- *      name: String,
- *      location: {
- *           lat: Double,
- *           lng: Double,
- *           address: String
- *       },
- *      onCampus: Boolean,
- *      image: String
- *   }
+ *     name: String,
+ *     location: {
+ *          latitude: Double,
+ *          longitude: Double,
+ *          address: String
+ *      },
+ *     onCampus: Boolean,
+ *     image: String
  * } */
 diningRoutes.route("/dining/:id").post(function (req, res) {
     let db_connect = dbo.getDb();
@@ -104,9 +99,7 @@ diningRoutes.route("/dining/:id").post(function (req, res) {
 });
 
 /** Delete a single dining document by id */
-/** request.body = {
- *    id: id
- * } */
+/** request.body = {} */
 diningRoutes.route("/dining/:id").delete((req, res) => {
     let db_connect = dbo.getDb();
     let myquery = { _id: ObjectId(req.params.id) };
