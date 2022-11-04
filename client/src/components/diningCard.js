@@ -61,6 +61,7 @@ function DiningCard() {
                 onRequestClose={toggleModal}
                 contentLabel="My dialog"
                 className='modal'
+                ariaHideApp={false}
             >
 
                 {/* google icon style sheet  */}
@@ -71,7 +72,7 @@ function DiningCard() {
                     <div className='modal-name-bottom-left'>{diningData[selectedInd].name}</div>
                     <div className='modal-button-close'>
                         <Button variant="danger" onClick={toggleModal}>
-                            <span class="material-symbols-outlined">close</span>
+                            <span className="material-symbols-outlined">close</span>
                         </Button>
                     </div>
                 </div>
@@ -85,7 +86,7 @@ function DiningCard() {
                     </div>
                 </div>
                 <div className='modal-container-third'>
-                    <div class="modal-menu-scroll">
+                    <div className="modal-menu-scroll">
                         Lorem Ipsum is simply dummy text of the printing and typesetting industry.
                         Lorem Ipsum has been the industry's standard dummy text ever since the 1500s when a
                         n unknown printer took a galley of type and scrambled it to make a type specimen book.
