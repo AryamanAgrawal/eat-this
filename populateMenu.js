@@ -18,7 +18,7 @@ for (let location = 0; location < dining.length; location++){
                         const thisdish = JSON.parse(dishes[key][d]);
                         //console.log(Object.keys(thisdish));
                         let list = Object.keys(thisdish);
-                        list.forEach((name) => { //name is the dish name, and thisdish[name] is the [ingredient, allergens, nutritionValues];
+                        list.forEach((name) => { //name is the dish name, and thisdish[name] is the [ingredient, allergens[], nutritionValues{}];
                                 console.log(`${thisdish[name]} --> ${name}`);
                         });
                         

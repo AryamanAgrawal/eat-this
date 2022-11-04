@@ -20,11 +20,11 @@
     "express": "^4.18.2",
     "jsonwebtoken": "^8.5.1",
     "mongodb": "^4.10.0",
-    "react-loader-spinner": "^5.3.4",
-    "survey-react-ui": "^1.9.55",
     "node-cron": "^3.0.2",
     "node-fetch": "^3.2.10",
-    "request-promise": "^4.2.6"
+    "react-loader-spinner": "^5.3.4",
+    "request-promise": "^4.2.6",
+    "survey-react-ui": "^1.9.55"
   },
   "devDependencies": {
     "jest": "^29.2.2",

@@ -1,5 +1,3 @@
-var express = require('express');
-var router = express.Router();
 
 const rp = require('request-promise');
 const cheerio = require('cheerio');
@@ -12,9 +10,8 @@ const mealtime = ['#breakfast_menu', '#lunch_menu', '#dinner_menu', '#latenight_
 const menu = {};
 
 (async () => {
-    //let menu = {};
     let dc_time = '';
-    //cron.schedule('10 0 * * *', async() => { //disable for now
+    cron.schedule('1 0 * * *', async() => { //disable for now
         dining.map(async (location) => {
         let url = 'https://umassdining.com/locations-menus/' + location + '/menu';      
             let response = await rp(url);
@@ -29,40 +26,48 @@ const menu = {};
                         let dish_attributes = $(elem)['0']['attribs'];
                         let dish = {}; // {dishname: [ingredient, allergens, nutritionValues]}
                         let dishname = dish_attributes['data-dish-name'].toString();
-                        let ingredient = dish_attributes['data-ingredient-list'].toString();
+                        let ingredient = dish_attributes['data-ingredient-list'].toString().split(',');
                         let allergens = dish_attributes['data-allergens'].toString().split(',');
-                        let nutritionValues = [
-                            dish_attributes['data-calories'].toString(),
-                            dish_attributes['data-total-fat'].toString(),
-                            dish_attributes['data-cholesterol'].toString(),
-                            dish_attributes['data-sodium'].toString(),
-                            dish_attributes['data-total-carb'].toString(),
-                            dish_attributes['data-dietary-fiber'].toString(),
-                            dish_attributes['data-sugars'].toString(),
-                            dish_attributes['data-protein'].toString()
-                        ];
-                        dish[dishname] = [ingredient, allergens, nutritionValues];
+                        let nutritionValues = {
+                            "calories" : dish_attributes['data-calories'].toString(),
+                            "totalFat" : dish_attributes['data-total-fat'].toString(),
+                            "cholesterol" : dish_attributes['data-cholesterol'].toString(),
+                            "sodium" : dish_attributes['data-sodium'].toString(),
+                            "totalCarb": dish_attributes['data-total-carb'].toString(),
+                            "dietaryFiber" : dish_attributes['data-dietary-fiber'].toString(),
+                            "sugars" : dish_attributes['data-sugars'].toString(),
+                            "protein" : dish_attributes['data-protein'].toString()
+                        };
+                        dish[dishname] = {
+                            "ingredients": ingredient,
+                            "allergens": allergens,
+                            "nutritionValues": nutritionValues
+                        };
                         let dishJSON = JSON.stringify(dish);
                         dishlist.push(dishJSON);
                     });
                     menu[dc_time] = dishlist;
-                    //{worcester#lunch_menu:[{dishname: [ingredient, allergens, nutritionValues]},
-                    //                       {dishname: [ingredient, allergens, nutritionValues]},...]}
+                    //{worcester#lunch_menu:[{dishname: [ingredient[], allergens[], nutritionValues{}},
+                    //                       {dishname: [ingredient[], allergens[], nutritionValues]},...]}
                     //console.log(menu);
+                    
+                    
+                    
                     fs.writeFileSync("dishdata.json", JSON.stringify(menu));
                 }
             });
 
         });
+    });
 
-        try {
-            const response = await fetch('./dishdata.json').then((response) => response.json()).then((json) => console.log(json));;
-          } catch (err) {
-            console.log(err);
-          }
+        // try {
+        //     const response = await fetch('./dishdata.json').then((response) => response.json()).then((json) => console.log(json));;
+        //   } catch (err) {
+        //     console.log(err);
+        //   }
 })();
 
-module.exports = router;
+//module.exports = router;
 
 //1) search by dining (aka worcester -> breakfast, lunch, dinner, late night, grab and go)
 //2) populate "menus" collection
