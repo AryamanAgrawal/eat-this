@@ -2,6 +2,12 @@
 CS 320 Project for Dining in Amherst
 
 [![Node.js CI Checks](https://github.com/AryamanAgrawal/eat-this/actions/workflows/node.js.yml/badge.svg?branch=develop)](https://github.com/AryamanAgrawal/eat-this/actions/workflows/node.js.yml)
+[![React.js Build](https://github.com/AryamanAgrawal/eat-this/actions/workflows/react.js.yml/badge.svg)](https://github.com/AryamanAgrawal/eat-this/actions/workflows/react.js.yml)
+
+## Test Users
+- email: test1@gmail.com, password: test
+- email: aryaman@gmail.com, password: aryaman
+
 
 ## Build Process
 - Install `git`, `npm`, `node` on your local machine. Check their validity on the command-line
@@ -55,6 +61,3 @@ The “Eat This!” app is focused on delivering quick recommendations for users
 - Performance Reliability:
   - Depends on the user device network capabilities
   - Depends on the appropriate functioning of UMass Dining services and updated menus
-
-
-
