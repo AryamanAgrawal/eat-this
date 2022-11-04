@@ -26,7 +26,10 @@
     "eslint": "^8.26.0",
     "express": "^4.18.2",
     "mongodb": "^4.10.0",
-    "react-modal": "^3.16.1"
+    "react-modal": "^3.16.1",
+    "jsonwebtoken": "^8.5.1",
+    "react-loader-spinner": "^5.3.4",
+    "survey-react-ui": "^1.9.55"
   },
   "devDependencies": {
     "jest": "^29.2.2",
