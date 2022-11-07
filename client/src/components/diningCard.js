@@ -20,11 +20,11 @@ function DiningCard(userLocation) {
             }
 
             const records = await response.json();
-            if (userLocation){
-                console.log(typeof(userLocation))
+            if (userLocation) {
+                console.log(typeof (userLocation))
                 setDiningData(records.result);
             }
-            
+
         }
         fetchData();
     }, [userLocation])
@@ -48,7 +48,7 @@ function DiningCard(userLocation) {
                             <Card onClick={() => { setSelectedInd(index); setIsOpen(true); }}>
                                 <Card.Img src={value.image} alt="dining images" />
                                 <Card.Body>
-                                    <Card.Title className='card-title'><div className="card-rank"><p className = "badge bg-success">{index+1}</p><span className="badge bg-success">{value.onCampus ? "On Campus" : "Off Campus"}</span></div><p>{value.name}</p> </Card.Title>
+                                    <Card.Title className='card-title'><div className="card-rank"><p className="badge bg-dark">{index + 1}</p><span className="badge bg-success">{value.onCampus ? "On Campus" : "Off Campus"}</span></div><p>{value.name}</p> </Card.Title>
                                     <Card.Text className="cardlocation">{value.location.address}</Card.Text>
 
                                 </Card.Body>
