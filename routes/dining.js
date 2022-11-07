@@ -1,6 +1,7 @@
 const express = require("express");
 const diningRoutes = express.Router();
 const dbo = require("../db/conn");
+const ObjectId = require("mongodb").ObjectId;
 
 /** Add a dining location */
 /** request.body = {
@@ -100,11 +101,11 @@ diningRoutes.route("/dining/:id").post(function (req, res) {
 /** request.body = {} */
 diningRoutes.route("/dining/:id").delete((req, res) => {
     let db_connect = dbo.getDb();
-   
 
-/** Populate DB with Menus from scrape */
-diningRoutes.route("/dining/menu").post(function (req, res) {
-    let db_connect = dbo.getDb();
+
+    /** Populate DB with Menus from scrape */
+    diningRoutes.route("/dining/menu").post(function (req, res) {
+        let db_connect = dbo.getDb();
         let myquery = {
             name: req.body.name,
             location: req.body.location,
@@ -117,8 +118,8 @@ diningRoutes.route("/dining/menu").post(function (req, res) {
             };
             res.status(200).json({ message: "Success: Dining location inserted", result });
         })
-});
- let myquery = { _id: ObjectId(req.params.id) };
+    });
+    let myquery = { _id: ObjectId(req.params.id) };
     db_connect.collection("diningLocations").deleteOne(myquery, function (err, obj) {
         if (err) {
             res.status(404).json({ message: "Failed to delete dining location", err });
