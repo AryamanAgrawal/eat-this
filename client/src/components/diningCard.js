@@ -44,8 +44,8 @@ function DiningCard() {
                             <Card onClick={() => { setSelectedInd(index); setIsOpen(true); }}>
                                 <Card.Img src={value.image} alt="dining images" />
                                 <Card.Body>
-                                    <Card.Title className='cardTitle'><span className="badge bg-success">{value.onCampus ? "On Campus" : "Off Campus"}</span> <p>{value.name}</p> </Card.Title>
-                                    <Card.Text className="cardlocation">{value.location}</Card.Text>
+                                    <Card.Title className='card title'><span className="badge bg-success">{value.onCampus ? "On Campus" : "Off Campus"}</span>{value.name} </Card.Title>
+                                    <Card.Text className="cardlocation">{value.location.address}</Card.Text>
 
                                 </Card.Body>
                             </Card>
@@ -77,7 +77,7 @@ function DiningCard() {
                     </div>
                 </div>
                 <div className='modal-container-second'>
-                    <div className='modal-address'>{diningData[selectedInd].location}</div>
+                    <div className='modal-address'>{diningData[selectedInd].location.address}</div>
                     <div className='modal-button-nav'>
                         <Button variant="success" onClick={toggleModal}>
                             <div className='modal-button-nav-text'>Navigate</div>
