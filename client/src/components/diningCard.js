@@ -48,7 +48,7 @@ function DiningCard(userLocation) {
                             <Card onClick={() => { setSelectedInd(index); setIsOpen(true); }}>
                                 <Card.Img src={value.image} alt="dining images" />
                                 <Card.Body>
-                                    <Card.Title className='card-title'><div className="card-rank"><p>{index+1}</p><span className="badge bg-success">{value.onCampus ? "On Campus" : "Off Campus"}</span></div><p>{value.name}</p> </Card.Title>
+                                    <Card.Title className='card-title'><div className="card-rank"><p className = "badge bg-success">{index+1}</p><span className="badge bg-success">{value.onCampus ? "On Campus" : "Off Campus"}</span></div><p>{value.name}</p> </Card.Title>
                                     <Card.Text className="cardlocation">{value.location.address}</Card.Text>
 
                                 </Card.Body>
