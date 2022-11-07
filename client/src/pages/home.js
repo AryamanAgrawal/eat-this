@@ -2,6 +2,7 @@ import React from "react";
 import DiningCard from "../components/diningCard";
 
 const Home = () => {
+  
   return (
     <div>
       {localStorage.getItem("token") ? (
@@ -10,7 +11,7 @@ const Home = () => {
         <h1 style={{ textAlign: "center" }}>Home Page</h1>
       )}
       <div className="home-cards">
-        <DiningCard />
+        <DiningCard/>
       </div>
     </div>
   );
