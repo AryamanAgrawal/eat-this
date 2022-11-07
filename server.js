@@ -10,8 +10,12 @@ app.use(express.json());
 app.use(require("./routes/record"));
 app.use(require("./routes/user"));
 app.use(require("./routes/dining"));
+
 // get driver connection
 const dbo = require("./db/conn");
+const imports = require('./scrape');
+
+imports.test();
 
 app.listen(port, () => {
     // perform a database connection when server starts

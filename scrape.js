@@ -1,4 +1,5 @@
 
+const constants = require('./constants');
 const rp = require('request-promise');
 const cheerio = require('cheerio');
 const cron = require('node-cron');
@@ -6,66 +7,74 @@ const cron = require('node-cron');
 const fs = require('fs');
 
 const dining = ['berkshire', 'hampshire', 'worcester', 'franklin'];
-const mealtime = ['#breakfast_menu', '#lunch_menu', '#dinner_menu', '#latenight_menu', '#grabngo'];
-const menu = {};
+const mealTime = ['#breakfast_menu', '#lunch_menu', '#dinner_menu', '#latenight_menu', '#grabngo'];
 
-(async () => {
+const tokenizer = (attr, dishname) => {
+    return attr.replace(dishname, "")
+        .trim()
+        .replace(constants.stopwords, "")
+        .replace(/[^.,a-zA-Z]/g, ",")
+        .split(",")
+        .filter((x) => x.length > 0)
+        .map((x) => x.trim())
+}
+
+async function scrapMenu() {
+    let menu = {};
     let dc_time = '';
-    cron.schedule('1 0 * * *', async() => { //disable for now
-        dining.map(async (location) => {
-        let url = 'https://umassdining.com/locations-menus/' + location + '/menu';      
-            let response = await rp(url);
-            let $ = cheerio.load(response);
-            //console.log("---------------------------------"+location+"----------------------------------"+"\n");
-            let dishlist = [];
-            mealtime.map(async (t) => {
-                if ($(t).html() !== null) {
-                    //console.log("----------------------------------------------"+t+"----------------------------------------------");
-                    $(t).find('div > li > a').each((index, elem) => {
-                        dc_time = location + t;
-                        let dish_attributes = $(elem)['0']['attribs'];
-                        let dish = {}; // {dishname: [ingredient, allergens, nutritionValues]}
-                        let dishname = dish_attributes['data-dish-name'].toString();
-                        let ingredient = dish_attributes['data-ingredient-list'].toString().split(',');
-                        let allergens = dish_attributes['data-allergens'].toString().split(',');
-                        let nutritionValues = {
-                            "calories" : dish_attributes['data-calories'].toString(),
-                            "totalFat" : dish_attributes['data-total-fat'].toString(),
-                            "cholesterol" : dish_attributes['data-cholesterol'].toString(),
-                            "sodium" : dish_attributes['data-sodium'].toString(),
-                            "totalCarb": dish_attributes['data-total-carb'].toString(),
-                            "dietaryFiber" : dish_attributes['data-dietary-fiber'].toString(),
-                            "sugars" : dish_attributes['data-sugars'].toString(),
-                            "protein" : dish_attributes['data-protein'].toString()
-                        };
-                        dish[dishname] = {
-                            "ingredients": ingredient,
-                            "allergens": allergens,
-                            "nutritionValues": nutritionValues
-                        };
-                        let dishJSON = JSON.stringify(dish);
-                        dishlist.push(dishJSON);
-                    });
-                    menu[dc_time] = dishlist;
-                    //{worcester#lunch_menu:[{dishname: [ingredient[], allergens[], nutritionValues{}},
-                    //                       {dishname: [ingredient[], allergens[], nutritionValues]},...]}
-                    //console.log(menu);
-                    
-                    
-                    
-                    fs.writeFileSync("dishdata.json", JSON.stringify(menu));
-                }
-            });
 
+    dining.map(async (location) => {
+        let url = 'https://umassdining.com/locations-menus/' + location + '/menu';
+        let response = await rp(url);
+        let $ = cheerio.load(response);
+
+        let dishlist = [];
+        mealTime.map(async (t) => {
+            if ($(t).html() !== null) {
+                $(t).find('div > li > a').each((i, elem) => {
+                    dc_time = location + t;
+                    let dishAttributes = $(elem)['0']['attribs'];
+                    let dish = {};
+                    let dishName = dishAttributes['data-dish-name'].toString().trim();
+                    let ingredient = tokenizer(dishAttributes['data-ingredient-list'], dishName);
+                    let allergens = tokenizer(dishAttributes['data-allergens'], dishName);
+                    let nutritionValues = {
+                        "calories": dishAttributes['data-calories'],
+                        "totalFat": dishAttributes['data-total-fat'],
+                        "cholesterol": dishAttributes['data-cholesterol'],
+                        "sodium": dishAttributes['data-sodium'],
+                        "totalCarb": dishAttributes['data-total-carb'],
+                        "dietaryFiber": dishAttributes['data-dietary-fiber'],
+                        "sugars": dishAttributes['data-sugars'],
+                        "protein": dishAttributes['data-protein']
+                    };
+                    dish[dishName] = {
+                        "dishName": dishName,
+                        "ingredients": ingredient,
+                        "allergens": allergens,
+                        "nutritionValues": nutritionValues
+                    };
+                    dishlist.push(dish);
+                });
+                menu[dc_time] = dishlist;
+                // fs.writeFileSync("dishdata.json", JSON.stringify(menu));
+            }
         });
-    });
 
-        // try {
-        //     const response = await fetch('./dishdata.json').then((response) => response.json()).then((json) => console.log(json));;
-        //   } catch (err) {
-        //     console.log(err);
-        //   }
-})();
+    });
+    return menu;
+}
+
+async function test() {
+    // let menu = await scrapMenu();
+    // console.log("testing imports");
+    // console.log(menu["worcester#lunch_menu"]);
+    cron.schedule('* * * * *', () => {
+        console.log('Scraping menu every 24 hours at 0100');
+    });
+}
+
+module.exports = { test };
 
 //module.exports = router;
 
@@ -73,8 +82,8 @@ const menu = {};
 //2) populate "menus" collection
         // Location: dining location
         // FoodId:
-        // MealTime: 
-        // Name of Dish: 
+        // MealTime:
+        // Name of Dish:
 //3) populate "foodItems" collection
         //ingredients:
         //allergens:
