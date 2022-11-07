@@ -52,6 +52,17 @@
   padding-top: 0.5rem;
 }
 
+.card-rank{
+  display:flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.card-rank p{
+  text-align: center;
+  padding: 0rem 0.5rem;
+}
+
 .modal {
   display: flex;
   flex-direction: column;
@@ -116,7 +127,6 @@
   place-items: center;
   justify-content: center;
   padding: 0px 20px 0px 0px;
-  width: fit-content;
 }
 
 .modal-button-nav-text{

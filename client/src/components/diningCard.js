@@ -5,7 +5,7 @@ import Button from 'react-bootstrap/Button';
 import "./diningCard.css"
 import Modal from "react-modal";
 
-function DiningCard() {
+function DiningCard(userLocation) {
 
     const [diningData, setDiningData] = useState([]);
 
@@ -20,10 +20,14 @@ function DiningCard() {
             }
 
             const records = await response.json();
-            setDiningData(records.result);
+            if (userLocation){
+                console.log(typeof(userLocation))
+                setDiningData(records.result);
+            }
+            
         }
         fetchData();
-    }, [])
+    }, [userLocation])
 
     const [isOpen, setIsOpen] = useState(false);
     const [selectedInd, setSelectedInd] = React.useState(-1);
@@ -44,7 +48,7 @@ function DiningCard() {
                             <Card onClick={() => { setSelectedInd(index); setIsOpen(true); }}>
                                 <Card.Img src={value.image} alt="dining images" />
                                 <Card.Body>
-                                    <Card.Title className='card title'><span className="badge bg-success">{value.onCampus ? "On Campus" : "Off Campus"}</span>{value.name} </Card.Title>
+                                    <Card.Title className='card-title'><div className="card-rank"><p>{index+1}</p><span className="badge bg-success">{value.onCampus ? "On Campus" : "Off Campus"}</span></div><p>{value.name}</p> </Card.Title>
                                     <Card.Text className="cardlocation">{value.location.address}</Card.Text>
 
                                 </Card.Body>
