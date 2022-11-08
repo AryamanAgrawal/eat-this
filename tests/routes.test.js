@@ -41,4 +41,32 @@ describe('test /login endpoint with incorrect login', () => {
     })
 })
 
+describe('test /user/preferences endpoint by adding preferences', () => {
+    it('should add new preferences', async () => {
+        const response = await request(url)
+            .post('/user/preferences')
+            .send({
+                userId: ObjectId('63629d6ad8308303c3383d37'),
+                preferredLocation: ["Franklin", "Worcester"],
+                allergens: ["Milk", "Corn", "Eggs"],
+                ingredients: ["Chicken"]
+            })
+        expect(response.statusCode).toEqual(200);
+    })
+})
+
+describe('test /user/preferences endpoint by updating preferences', () => {
+    it('should add new preferences', async () => {
+        const response = await request(url)
+            .post('/user/preferences/:id/edit')
+            .send({
+                userId: ObjectId('63629d6ad8308303c3383d37'),
+                preferredLocation: ["Berkshire"],
+                allergens: ["Milk", "Corn", "Eggs"],
+                ingredients: ["Chicken"]
+            })
+        expect(response.statusCode).toEqual(200);
+    })
+})
+
 
