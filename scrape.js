@@ -3,6 +3,7 @@ const constants = require('./constants');
 const rp = require('request-promise');
 const cheerio = require('cheerio');
 const cron = require('node-cron');
+const ObjectId = require("mongodb").ObjectId;
 
 const dining = ['berkshire', 'hampshire', 'worcester', 'franklin'];
 const mealType = ['#breakfast_menu', '#lunch_menu', '#dinner_menu', '#latenight_menu', '#grabngo'];
@@ -51,7 +52,7 @@ async function scrapeMenu() {
                         "sugars": dishAttributes['data-sugars'],
                         "protein": dishAttributes['data-protein']
                     };
-                    dish[dishName] = {
+                    dish = {
                         "dishName": dishName,
                         "ingredients": ingredient,
                         "allergens": allergens,
@@ -72,65 +73,87 @@ async function scrapeMenu() {
             }
         }
     }
-
+    let menu = [menu_frank, menu_berk, menu_woo, menu_hamp]
+    // for (let k in menu) {
+    //     for (let j in menu[k]) {
+    //         console.log(menu[k][j]);
+    //     }
+    // }
     return [menu_frank, menu_berk, menu_woo, menu_hamp]
     // 0: frank, 1: berk, 2: woo, 3: hamp
 }
 
 async function uploadMenuData() {
     let menu = await scrapeMenu();
+    let db_connect = dbo.getDb();
 
-    for (let i = 0; i < dining.length; i++) {
-        let menuLocation = dining[i];
+    for (let i = 0; i < menu.length; i++) {
+        let menuLocation = menu[i];
         let diningLocationName = "";
+        let diningLocationId = "";
 
         if (menuLocation === "franklin") {
             diningLocationName = "Franklin Dining Commons";
+            diningLocationId = "636803f74459bcab97ecca75";
         } else if (menuLocation === "berkshire") {
             diningLocationName = "Berkshire Dining Commons";
+            diningLocationId = "636803ac4459bcab97ecca74";
         } else if (menuLocation === "worcester") {
             diningLocationName = "Worcester Dining Commons";
+            diningLocationId = "636803044459bcab97ecca71";
         } else if (menuLocation === "hampshire") {
-            diningLocationName = "636803734459bcab97ecca73";
+            diningLocationName = "Hampshire Dining Commons";
+            diningLocationId = "636803734459bcab97ecca73";
         }
 
-        db_connect.collection("dinigLocations").findOne({ name: diningLocationName }, function (err, result) {
-            if (err) throw err;
-            res.status(200).json({ message: "Success: Fetched user", result });
-            diningLocationId = result._id;
-        });
+        // menu Object
+        // { 
+        //     "_id": { "$oid": "6358488ee819be9655f5882f" }, 
+        //     "foodIds": ["1", "2"], 
+        //     "mealType": "breakfast", 
+        //     "diningLocation": "636803044459bcab97ecca71" 
+        // }        
+        for (let mealType in menu[i]) {
 
-        db_connect.collection("foodItems").updateMany(myobj, function (err, result) {
-            if (err) {
-                res.status(404).json({ message: "Dining location insert failed", err });
-            };
-            res.status(200).json({ message: "Success: Dining location inserted", result });
-        });
+            const foodItems = menu[i][mealType];
+
+
+
+            console.log("Made it to db statement");
+            db_connect.collection("foodDummy").remove({});
+            db_connect.collection("foodDummy").updatetMany(foodItems, function (err, result1) {
+                if (err) {
+                    console.log(err);
+                    return;
+                };
+                foodIds = result1.insertedIds;
+
+                console.log("Inserted foodIds");
+                myfindQuery = { diningLocationId: ObjectId(diningLocationId), mealType: mealType };
+                let newMenu = {
+                    $set: {
+                        foodIds: foodIds,
+                    },
+                };
+                db_connect.collection("menus").updateOne(myfindQuery, newMenu, function (err, result2) {
+                    if (err) {
+                        console.log(err);
+                        return;
+
+                    };
+                });
+                console.log("updated menus");
+            });
+        }
     }
 
 }
 
-async function test() {
-    let db_connect = await dbo.getDb();
-    console.log(db_connect);
-    let myquery = { name: "Worcester Dining Commons" };
-    if (db_connect) {
-        db_connect.collection("dinigLocations").findOne(myquery, function (err, result) {
-            if (err) {
-                res.status(404).json({ message: "Failed to fetch dining location", err });
-                throw err;
-            }
-            console.log(result)
-        });
-    }
-}
-// test();
 
-// console.log("testing imports");
-// console.log(menu["worcester#lunch_menu"]);
 cron.schedule('* * * * *', () => {
-    test()
-    console.log('Scraping menu every 24 hours at 0100');
+    uploadMenuData();
+    console.log('Scraping menu every 24 hours at 01:00');
 });
 
-// module.exports = { test }
+
+// module.exports = { scheduleScrape }
