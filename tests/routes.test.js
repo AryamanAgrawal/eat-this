@@ -17,7 +17,7 @@ describe('test /resgister endpoint', () => {
 })
 
 describe('test /resgister endpoint with duplicate user', () => {
-    it('should create a new post', async () => {
+    it('should not create a new post', async () => {
         const response = await request(url)
             .post('/register')
             .send({
