@@ -5,6 +5,9 @@ import "./diningCard.css"
 import Modal from "react-modal";
 import { getDistance } from 'geolib';
 import useCurrentLocation from "../components/geo-location";
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import {faLocationArrow } from '@fortawesome/fontawesome-free-solid'
+
 
 const geolocationOptions = {
     enableHighAccuracy: true,
@@ -104,7 +107,8 @@ function DiningCard() {
                     <div className='modal-address'>{diningData[selectedInd].location.address}</div>
                     <div className='modal-button-nav'>
                         <Button variant="success" onClick = {() => openURL('https://www.google.com/maps/dir/?api=1&origin=' + location.latitude + ',' + location.longitude + '&destination=' + diningData[selectedInd].location.latitude + ',' + diningData[selectedInd].location.longitude + '&travelmode=walking')}>
-                            <div className='modal-button-nav-text'>Navigate</div>           
+                            <div className='modal-button-nav-text'>Navigate</div> 
+                            <FontAwesomeIcon icon={faLocationArrow}/>          
                         </Button>
                     </div>
                 </div>
