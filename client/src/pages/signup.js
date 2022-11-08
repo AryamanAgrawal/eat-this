@@ -23,7 +23,7 @@ const Signup = () => {
     setLoading(true);
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:8000/register", {
+      const response = await fetch("https://umasseatthis.herokuapp.com/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
