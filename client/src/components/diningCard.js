@@ -14,7 +14,7 @@ const geolocationOptions = {
 
 function DiningCard() {
     const { location, error} = useCurrentLocation(geolocationOptions);
-
+    console.log(error);
     const [diningData, setDiningData] = useState([]);
 
     useEffect(() => {
