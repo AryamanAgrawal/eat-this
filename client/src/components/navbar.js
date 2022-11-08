@@ -120,6 +120,7 @@ export default function Navbar() {
         <div className="main__navbar-links">
           <div className="main__navbar-links_logo">
             <img src={logo} alt="logo" />
+            <h1>Eat This!</h1>
           </div>
           <div className="main__navbar-links_container">
             {(isDesktopOrLaptop || isBigScreen) && <DesktopNav />}
