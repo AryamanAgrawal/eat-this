@@ -1,14 +1,16 @@
 import React from "react";
-import DiningCard from "../components/diningCard"
+import DiningCard from "../components/diningCard";
 
 const Home = () => {
   return (
     <div>
-      <h1 style={{ "textAlign": "center" }}>
-        Home Page
-      </h1>
+      {localStorage.getItem("token") ? (
+        <h1 style={{ textAlign: "center" }}>Logged In</h1>
+      ) : (
+        <h1 style={{ textAlign: "center" }}>Home Page</h1>
+      )}
       <div className="home-cards">
-        <DiningCard />
+        <DiningCard/>
       </div>
     </div>
   );

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styles from "./signupStyles.module.css";
+import { Circles } from "react-loader-spinner";
 
 const Signup = () => {
 
@@ -12,12 +13,14 @@ const Signup = () => {
   });
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
   const handleChange = ({ currentTarget: input }) => {
     setData({ ...data, [input.name]: input.value });
   };
 
   const handleSubmit = async (e) => {
+    setLoading(true);
     e.preventDefault();
     try {
       const response = await fetch("https://umasseatthis.herokuapp.com/register", {
@@ -31,7 +34,11 @@ const Signup = () => {
       if (!response.ok) {
         throw new Error(responseData.message);
       }
+      localStorage.setItem("userId", responseData.result.insertedId);
+      localStorage.setItem("token", responseData.token);
+      setLoading(false);
       navigate("/");
+      window.location.reload();
     } catch (err) {
       setError(err.message);
     }
@@ -40,6 +47,16 @@ const Signup = () => {
 
   return (
     <div className={styles.signup_container}>
+      {loading && (
+        <div className={styles.overlay}>
+          <Circles
+            type="Circles"
+            color="#881c1c"
+            height={40}
+            width={40}
+          />
+        </div>
+      )}
       <div className={styles.signup_form_container}>
         <div className={styles.left}>
           <h1>Welcome Back</h1>
