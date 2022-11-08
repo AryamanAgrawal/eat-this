@@ -1,11 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { Card, Row, Col, Container } from "react-bootstrap";
 import Button from 'react-bootstrap/Button';
-
 import "./diningCard.css"
 import Modal from "react-modal";
+import { getDistance } from 'geolib';
+import useCurrentLocation from "../components/geo-location";
 
-function DiningCard(userLocation) {
+const geolocationOptions = {
+    enableHighAccuracy: true,
+    timeout: 1000 * 60 * 1, // 1 min (1000 ms * 60 sec * 1 minute = 60 000ms)
+    maximumAge: 1000 * 60 * 5, // 5 mins
+};
+
+function DiningCard() {
+    const { location, error} = useCurrentLocation(geolocationOptions);
 
     const [diningData, setDiningData] = useState([]);
 
@@ -20,14 +28,23 @@ function DiningCard(userLocation) {
             }
 
             const records = await response.json();
-            if (userLocation) {
-                console.log(typeof (userLocation))
-                setDiningData(records.result);
+
+            if (location === undefined) {            
+                setDiningData(records.result);              
+            }else{
+                const diningArray = records.result;
+                diningArray.sort((a,b)=> {
+                    const aDistance = getDistance(location,{latitude : a.location.latitude, longitude: a.location.longitude});
+                    const bDistance = getDistance(location,{latitude : b.location.latitude, longitude: b.location.longitude});
+                    return  aDistance - bDistance; 
+                })
+                console.log(diningArray);
+                setDiningData(diningArray);
             }
 
         }
         fetchData();
-    }, [userLocation])
+    }, [location])
 
     const [isOpen, setIsOpen] = useState(false);
     const [selectedInd, setSelectedInd] = React.useState(-1);
@@ -37,6 +54,11 @@ function DiningCard(userLocation) {
     function toggleModal() {
         setIsOpen(!isOpen);
     }
+
+    const openURL = url => {
+        window.open(url,'_blank','noopener,noreferrer');
+
+    };
 
 
     const DiningComponent = () => (
@@ -53,8 +75,6 @@ function DiningCard(userLocation) {
 
                                 </Card.Body>
                             </Card>
-
-
                         </Col>
                     ))}
                 </Row>
@@ -83,9 +103,8 @@ function DiningCard(userLocation) {
                 <div className='modal-container-second'>
                     <div className='modal-address'>{diningData[selectedInd].location.address}</div>
                     <div className='modal-button-nav'>
-                        <Button variant="success" onClick={toggleModal}>
-                            <div className='modal-button-nav-text'>Navigate</div>
-                            <span className="material-symbols-outlined">navigation</span>
+                        <Button variant="success" onClick = {() => openURL('https://www.google.com/maps/dir/?api=1&origin=' + location.latitude + ',' + location.longitude + '&destination=' + diningData[selectedInd].location.latitude + ',' + diningData[selectedInd].location.longitude + '&travelmode=walking')}>
+                            <div className='modal-button-nav-text'>Navigate</div>           
                         </Button>
                     </div>
                 </div>
@@ -111,7 +130,6 @@ function DiningCard(userLocation) {
             </Modal>}
         </>
     )
-
     return (
         <DiningComponent />
     );
