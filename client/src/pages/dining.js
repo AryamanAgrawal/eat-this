@@ -4,7 +4,7 @@ const Dining = () => {
   return (
     <div>
       <h1>
-        Dinig Page
+        Dining Page
       </h1>
     </div>
   );

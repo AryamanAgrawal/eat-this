@@ -2,6 +2,40 @@
 CS 320 Project for Dining in Amherst
 
 [![Node.js CI Checks](https://github.com/AryamanAgrawal/eat-this/actions/workflows/node.js.yml/badge.svg?branch=develop)](https://github.com/AryamanAgrawal/eat-this/actions/workflows/node.js.yml)
+[![React.js Build](https://github.com/AryamanAgrawal/eat-this/actions/workflows/react.js.yml/badge.svg)](https://github.com/AryamanAgrawal/eat-this/actions/workflows/react.js.yml)
+
+
+## Releases
+
+### [Beta Release](https://github.com/users/AryamanAgrawal/projects/2)
+
+- Features: 
+  - Dining recommendations by location
+  - User Login and Signup
+  - User preferences
+
+- Bugs:
+  - Dining recommendations glitch while rendering
+  - Cannot delete preferences once selected
+  - No menu data in dining recommendataions
+
+### [Alpha Release](https://github.com/users/AryamanAgrawal/projects/1/views/5)
+
+- Features:
+  - Hosted the Nodejs server
+  - Connection with MongoDB Database
+  - Frontend connection with Nodejs and MongoDB database
+  
+- Bugs:
+  - No Login/Signup UX [#48](/../../issues/48)
+  - No User Preferences [#52](/../../issues/52)
+  - No Geolocation recommendations [#45](/../../issues/45)
+  - Menu data not scarping properly [#10](/../../issues/10)
+
+## Test Users
+- email: test1@gmail.com, password: test
+- email: aryaman@gmail.com, password: aryaman
+
 
 ## Build Process
 - Install `git`, `npm`, `node` on your local machine. Check their validity on the command-line
@@ -55,6 +89,3 @@ The “Eat This!” app is focused on delivering quick recommendations for users
 - Performance Reliability:
   - Depends on the user device network capabilities
   - Depends on the appropriate functioning of UMass Dining services and updated menus
-
-
-
