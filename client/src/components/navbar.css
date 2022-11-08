@@ -26,6 +26,13 @@
     height: 60px;
 }
 
+.main__navbar-links_logo h1 {
+    color: white;
+    justify-content: center;
+    margin: 0 0 0 1rem;
+    align-content: center;
+}
+
 .main__navbar-links_container {
     display: flex;
     align-items: center;
