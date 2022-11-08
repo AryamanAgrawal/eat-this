@@ -2,7 +2,6 @@ import React from "react";
 import DiningCard from "../components/diningCard";
 
 const Home = () => {
-  
   return (
     <div>
       {localStorage.getItem("token") ? (
