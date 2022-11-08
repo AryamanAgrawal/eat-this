@@ -13,7 +13,7 @@ module.exports = {
             // Verify we got a good "db" object
             if (db) {
                 _db = db.db("eatThis");
-                //console.log("Successfully connected to MongoDB.");
+                console.log("Successfully connected to MongoDB.");
             }
             return callback(err);
         });
