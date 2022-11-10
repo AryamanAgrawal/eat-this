@@ -23,8 +23,8 @@ function saveSurveyResults(url, json) {
   request.send(JSON.stringify(json));
 }
 
-function SurveyComponent({type}) {
-  
+function SurveyComponent({ type }) {
+
   const surveyComplete = useCallback((sender) => {
     const data = {
       userId: localStorage.getItem("userId"),
@@ -33,11 +33,11 @@ function SurveyComponent({type}) {
       ingredients: sender.data["ingredients"],
     };
     if (type === "edit") {
-      saveSurveyResults(`http://localhost:8000/user/preferences/${localStorage.getItem("userId")}/edit`, data);
+      saveSurveyResults(`https://umasseatthis.herokuapp.com/user/preferences/${localStorage.getItem("userId")}/edit`, data);
     } else {
-      saveSurveyResults("http://localhost:8000/user/preferences", data);
+      saveSurveyResults("https://umasseatthis.herokuapp.com/user/preferences", data);
     }
-  },[type] );
+  }, [type]);
 
   const survey = new Model(json);
   survey.onComplete.add(surveyComplete);
