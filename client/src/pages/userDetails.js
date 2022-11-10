@@ -11,7 +11,7 @@ export default class UserDetails extends Component {
   }
   componentDidMount() {
     if (localStorage.getItem("token")) {
-      fetch(`http://localhost:8000/user/${localStorage.getItem("userId")}`, {
+      fetch(`https://umasseatthis.herokuapp.com/user/${localStorage.getItem("userId")}`, {
         method: "GET",
         crossDomain: true,
         headers: {
@@ -26,7 +26,7 @@ export default class UserDetails extends Component {
           this.setState({ userData: data.result });
         });
       fetch(
-        `http://localhost:8000/user/preferences/${localStorage.getItem(
+        `https://umasseatthis.herokuapp.com/user/preferences/${localStorage.getItem(
           "userId"
         )}`,
         {
@@ -42,7 +42,7 @@ export default class UserDetails extends Component {
         .then((res) => res.json())
         .then((data) => {
           this.setState({ preferenceData: data.result });
-        });    
+        });
     }
   }
   render() {
@@ -54,7 +54,7 @@ export default class UserDetails extends Component {
           <h3>Name: {this.state.userData.firstName}</h3>
           <h3>Email: {this.state.userData.email}</h3>
 
-          {this.state.preferenceData !== null ? 
+          {this.state.preferenceData !== null ?
             <>
               <h1 style={{ textAlign: "center", marginTop: 25 }}>
                 Your Preferences
@@ -68,9 +68,9 @@ export default class UserDetails extends Component {
               <h1 style={{ textAlign: "center", marginTop: 25 }}>
                 Edit Your Preferences
               </h1>
-              <Survey type={"edit"}/>
+              <Survey type={"edit"} />
             </>
-           : 
+            :
             <>
               <h1 style={{ textAlign: "center", marginTop: 25 }}>
                 Add Your Preferences

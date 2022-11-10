@@ -2,7 +2,7 @@
 CS 320 Project for Dining in Amherst
 
 [![Node.js CI Checks](https://github.com/AryamanAgrawal/eat-this/actions/workflows/node.js.yml/badge.svg?branch=develop)](https://github.com/AryamanAgrawal/eat-this/actions/workflows/node.js.yml)
-[![React.js Build](https://github.com/AryamanAgrawal/eat-this/actions/workflows/react.js.yml/badge.svg)](https://github.com/AryamanAgrawal/eat-this/actions/workflows/react.js.yml)
+[![React.js Build](https://github.com/AryamanAgrawal/eat-this/actions/workflows/react.js.yml/badge.svg?branch=develop)](https://github.com/AryamanAgrawal/eat-this/actions/workflows/react.js.yml)
 
 
 ## Releases
