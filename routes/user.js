@@ -27,16 +27,16 @@ userRoutes.route("/register").post(function (req, res) {
         db_connect.collection("users").findOne(myquery, function (err, doc) {
             if (doc) {
                 res.status(404).json({ message: "User already exists", err });
+                return;
             }
-            return;
+            db_connect.collection("users").insertOne(myobj, function (err, result) {
+                if (err) {
+                    res.status(404).json({ message: "Registration failed", err });
+                };
+                const token = jwt.sign({}, JWT_SECRET);
+                res.status(200).json({ message: "Registration successful", result, token: token });
+            })
         });
-        db_connect.collection("users").insertOne(myobj, function (err, result) {
-            if (err) {
-                res.status(404).json({ message: "Registration failed", err });
-            };
-            const token = jwt.sign({}, JWT_SECRET);
-            res.status(200).json({ message: "Registration successful", result, token: token });
-        })
     })
 });
 

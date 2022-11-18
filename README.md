@@ -2,7 +2,7 @@
 CS 320 Project for Dining in Amherst
 
 [![Node.js CI Checks](https://github.com/AryamanAgrawal/eat-this/actions/workflows/node.js.yml/badge.svg?branch=develop)](https://github.com/AryamanAgrawal/eat-this/actions/workflows/node.js.yml)
-[![React.js Build](https://github.com/AryamanAgrawal/eat-this/actions/workflows/react.js.yml/badge.svg)](https://github.com/AryamanAgrawal/eat-this/actions/workflows/react.js.yml)
+[![React.js Build](https://github.com/AryamanAgrawal/eat-this/actions/workflows/react.js.yml/badge.svg?branch=develop)](https://github.com/AryamanAgrawal/eat-this/actions/workflows/react.js.yml)
 
 
 ## Releases
@@ -17,7 +17,8 @@ CS 320 Project for Dining in Amherst
 - Bugs:
   - Dining recommendations glitch while rendering
   - Cannot delete preferences once selected
-  - No menu data in dining recommendataions
+  - No menu data in dining card
+  - Dining modal close button glitch while rendering
 
 ### [Alpha Release](https://github.com/users/AryamanAgrawal/projects/1/views/5)
 
@@ -61,11 +62,11 @@ CS 320 Project for Dining in Amherst
 
 ## Assignments
 
-### 1. Software Requirement Specifications - 10/04/2022
+### 1. Software Requirement Specifications - 11/08/2022
 
 Refer to drive link [here](https://docs.google.com/document/d/1_EHqrhuLGR-dN5SB_UUuSyfDGl9PGa2b-hvZCkuTv3Q/edit?usp=sharing)
 
-### 2. Software Design Specifications - 10/11/2022
+### 2. Software Design Specifications - 10/08/2022
 
 Refere to drive link [here](https://docs.google.com/document/d/1nJ_7lThzWetma2WaJRYS9YIeebpiZum9t1St1bZ9gVY/edit?usp=sharing)
 

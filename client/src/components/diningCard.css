@@ -81,9 +81,9 @@
   left: 50%;
   margin-right: -50%;
   transform: translate(-50%, -50%);
-    
+  border-radius: 1.5%;
   background: white;
-  box-shadow: 0 0 60px 10px rgba(0, 0, 0, 0.9);
+  box-shadow: 0 0 20px 2px rgba(0, 0, 0, 0.5);
 }
 
 .modal-container-first {
@@ -133,6 +133,7 @@
 
 .modal-button-nav-text{
   display: inline-block;
+  margin-right: 1rem;
 }
 
 .material-symbols-outlined {
@@ -208,7 +209,7 @@
   }
 
   .modal-button-nav-text{
-    font-size: small;
+    display: none;
   }
   
   .material-symbols-outlined {
