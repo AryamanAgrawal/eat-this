@@ -25,6 +25,8 @@ async function scrapeMenu() {
     let menu_berk = {};
     let menu_woo = {};
     let menu_hamp = {};
+    let menu = {};
+
 
     for (let i = 0; i < dining.length; i++) {
         let url = 'https://umassdining.com/locations-menus/' + dining[i] + '/menu';
@@ -32,6 +34,7 @@ async function scrapeMenu() {
         let $ = cheerio.load(response);
         let location = dining[i];
         let dishList = [];
+        menu[location] = {};
 
         for (let j = 0; j < mealType.length; j++) {
             let t = mealType[j];
@@ -61,94 +64,82 @@ async function scrapeMenu() {
                     dishList.push(dish);
                 });
                 const time = t.replace("#", "").replace("_menu", "");
-                if (location === "franklin") {
-                    menu_frank[time] = dishList;
-                } else if (location === "berkshire") {
-                    menu_berk[time] = dishList;
-                } else if (location === "worcester") {
-                    menu_woo[time] = dishList;
-                } else if (location === "hampshire") {
-                    menu_hamp[time] = dishList;
-                }
+                menu[location][time] = dishList;
+            } else {
+
             }
         }
     }
-    let menu = [menu_frank, menu_berk, menu_woo, menu_hamp]
+    // let menu = [menu_frank, menu_berk, menu_woo, menu_hamp]
     // for (let k in menu) {
     //     for (let j in menu[k]) {
     //         console.log(menu[k][j]);
     //     }
     // }
-    return [menu_frank, menu_berk, menu_woo, menu_hamp]
-    // 0: frank, 1: berk, 2: woo, 3: hamp
+
+    return menu;
 }
 
 async function uploadMenuData() {
     let menu = await scrapeMenu();
     let db_connect = dbo.getDb();
 
-    for (let i = 0; i < menu.length; i++) {
-        let menuLocation = menu[i];
-        let diningLocationName = "";
-        let diningLocationId = "";
+    for (let i in menu) {
 
-        if (menuLocation === "franklin") {
-            diningLocationName = "Franklin Dining Commons";
-            diningLocationId = "636803f74459bcab97ecca75";
-        } else if (menuLocation === "berkshire") {
-            diningLocationName = "Berkshire Dining Commons";
-            diningLocationId = "636803ac4459bcab97ecca74";
-        } else if (menuLocation === "worcester") {
-            diningLocationName = "Worcester Dining Commons";
-            diningLocationId = "636803044459bcab97ecca71";
-        } else if (menuLocation === "hampshire") {
-            diningLocationName = "Hampshire Dining Commons";
-            diningLocationId = "636803734459bcab97ecca73";
-        }
-
-        // menu Object
-        // { 
-        //     "_id": { "$oid": "6358488ee819be9655f5882f" }, 
-        //     "foodIds": ["1", "2"], 
-        //     "mealType": "breakfast", 
-        //     "diningLocation": "636803044459bcab97ecca71" 
-        // }        
         for (let mealType in menu[i]) {
 
             const foodItems = menu[i][mealType];
+            console.log(mealType)
 
-
-
-            console.log("Made it to db statement");
-            db_connect.collection("foodDummy").remove({});
-            db_connect.collection("foodDummy").updatetMany(foodItems, function (err, result1) {
+            db_connect.collection("foodDummy").deleteMany({});
+            db_connect.collection("foodDummy").insertMany(foodItems, function (err, result1) {
                 if (err) {
                     console.log(err);
                     return;
                 };
-                foodIds = result1.insertedIds;
 
-                console.log("Inserted foodIds");
-                myfindQuery = { diningLocationId: ObjectId(diningLocationId), mealType: mealType };
+                let foodIds = [];
+                for (let id in result1.insertedIds) {
+
+                    foodIds.push(result1.insertedIds[id]);
+                }
+
+                let diningLocationName = "";
+                let diningLocationId = "";
+
+                if (i === "franklin") {
+                    diningLocationName = "Franklin Dining Commons";
+                    diningLocationId = "636803f74459bcab97ecca75";
+                } else if (i === "berkshire") {
+                    diningLocationName = "Berkshire Dining Commons";
+                    diningLocationId = "636803ac4459bcab97ecca74";
+                } else if (i === "worcester") {
+                    diningLocationName = "Worcester Dining Commons";
+                    diningLocationId = "636803044459bcab97ecca71";
+                } else if (i === "hampshire") {
+                    diningLocationName = "Hampshire Dining Commons";
+                    diningLocationId = "636803734459bcab97ecca73";
+                }
+
+                myfindQuery = { diningLocationId: diningLocationId, mealType: mealType };
+
                 let newMenu = {
                     $set: {
                         foodIds: foodIds,
                     },
                 };
-                db_connect.collection("menus").updateOne(myfindQuery, newMenu, function (err, result2) {
+
+                db_connect.collection("menuDummy").updateOne(myfindQuery, newMenu, { upsert: true }, function (err, result2) {
                     if (err) {
                         console.log(err);
                         return;
-
                     };
                 });
-                console.log("updated menus");
             });
         }
     }
 
 }
-
 
 cron.schedule('* * * * *', () => {
     uploadMenuData();
