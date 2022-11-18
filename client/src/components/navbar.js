@@ -26,10 +26,10 @@ export default function Navbar() {
       <NavLink className="nav-item" to="/">
         Home
       </NavLink>
-      <NavLink className="nav-item" to="/dining">
+      <NavLink className="nav-item" to="/diningPage">
         Dining
       </NavLink>
-      <NavLink className="nav-item" to="/user">
+      <NavLink className="nav-item" to="/userPage">
         User
       </NavLink>
     </>
@@ -52,12 +52,12 @@ export default function Navbar() {
         </div>
       ) : (
         <>
-          <NavLink className="nav-item" to="/login">
+          <NavLink className="nav-item" to="/loginPage">
             <button className="login" type="button">
               Log in
             </button>
           </NavLink>
-          <NavLink className="nav-item" to="/signup">
+          <NavLink className="nav-item" to="/signupPage">
             <button className="signup" type="button">
               Sign up
             </button>
@@ -95,12 +95,12 @@ export default function Navbar() {
                 </div>
               ) : (
                 <>
-                  <NavLink className="nav-item" to="/login">
+                  <NavLink className="nav-item" to="/loginPage">
                     <button className="login" type="button">
                       Log in
                     </button>
                   </NavLink>
-                  <NavLink className="nav-item" to="/signup">
+                  <NavLink className="nav-item" to="/signupPage">
                     <button className="signup" type="button">
                       Sign up
                     </button>
