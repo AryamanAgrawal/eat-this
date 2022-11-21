@@ -18,8 +18,7 @@ const Signup = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
-  const [passwordFocused, setPasswordFocused] = useState(true);
-  const [password, setPassword] = useState("");
+
   const [passwordValidity, setPasswordValidity] = useState({
     minChar: null,
     number: null,
@@ -31,19 +30,28 @@ const Signup = () => {
   };
 
   const onChangePassword = (password) => {
-    setPassword(password);
+    setData({ ...data, password });
 
     setPasswordValidity({
       minChar: password.length >= 8 ? true : false,
       number: isNumberRegx.test(password) ? true : false,
       specialChar: specialCharacterRegx.test(password) ? true : false,
     });
+
+  
   };
 
   const handleSubmit = async (e) => {
+    
     setLoading(true);
     e.preventDefault();
     try {
+      if(!passwordValidity.minChar || !passwordValidity.number || !passwordValidity.specialChar) {
+        setLoading(false);
+        setError("Password requirements not met");
+        return;
+      }
+      
       const response = await fetch(
         "https://umasseatthis.herokuapp.com/register",
         {
@@ -119,15 +127,12 @@ const Signup = () => {
               type="password"
               placeholder="Password"
               name="password"
-              onFocus={() => setPasswordFocused(true)}
               onChange={(e) => onChangePassword(e.target.value)}
-              value={password}
+              value={data.password}
               required
               className={styles.input}
-            />
-            {passwordFocused && (
-              <PasswordStrengthIndicator validity={passwordValidity} />
-            )}
+            />     
+            <PasswordStrengthIndicator validity={passwordValidity} />
             {error && <div className={styles.error_msg}>{error}</div>}
             <button type="submit" className={styles.red_btn}>
               Sign Up

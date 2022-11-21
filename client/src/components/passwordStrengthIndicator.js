@@ -4,9 +4,9 @@ const PasswordStrengthIndicator = ({
     validity: { minChar, number, specialChar }
 }) => {
     return (
-        <div className="password-meter text-left mb-4">
-            <p className="text-dark">Password must contain:</p>
-            <ul className="text-muted">
+        <div className="password-meter text-left mb-4" >
+            <p className="text-dark" style={{padding:0}}>Password must contain:</p>
+            <p className="text-muted" style={{fontSize:14,padding:0}}>
                 <PasswordStrengthIndicatorItem
                     isValid={minChar}
                     text="Have at least 8 characters"
@@ -19,7 +19,7 @@ const PasswordStrengthIndicator = ({
                     isValid={specialChar}
                     text="Have at least 1 special character"
                 />
-            </ul>
+            </p>
         </div>
     );
 };
