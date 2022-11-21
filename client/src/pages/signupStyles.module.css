@@ -9,7 +9,7 @@
 
 .signup_form_container {
 	width: 900px;
-	height: 500px;
+	height:550px;
 	display: flex;
 	border-radius: 10px;
 	box-shadow: 0px 3px 3px -2px rgb(0 0 0 / 20%),
@@ -102,7 +102,7 @@
 .red_btn {
 	background-color: #881c1c;
 	color: white;
-	margin: 10px;
+
 }
 
 @media only screen and (max-width: 1200px) {

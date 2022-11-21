@@ -2,9 +2,13 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styles from "./signupStyles.module.css";
 import { Circles } from "react-loader-spinner";
+import PasswordStrengthIndicator from "../components/passwordStrengthIndicator";
+
+const isNumberRegx = /\d/;
+// eslint-disable-next-line
+const specialCharacterRegx = /[ !@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/;
 
 const Signup = () => {
-
   const [data, setData] = useState({
     firstName: "",
     lastName: "",
@@ -14,22 +18,42 @@ const Signup = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const [passwordFocused, setPasswordFocused] = useState(true);
+  const [password, setPassword] = useState("");
+  const [passwordValidity, setPasswordValidity] = useState({
+    minChar: null,
+    number: null,
+    specialChar: null,
+  });
 
   const handleChange = ({ currentTarget: input }) => {
     setData({ ...data, [input.name]: input.value });
+  };
+
+  const onChangePassword = (password) => {
+    setPassword(password);
+
+    setPasswordValidity({
+      minChar: password.length >= 8 ? true : false,
+      number: isNumberRegx.test(password) ? true : false,
+      specialChar: specialCharacterRegx.test(password) ? true : false,
+    });
   };
 
   const handleSubmit = async (e) => {
     setLoading(true);
     e.preventDefault();
     try {
-      const response = await fetch("https://umasseatthis.herokuapp.com/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
+      const response = await fetch(
+        "https://umasseatthis.herokuapp.com/register",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        }
+      );
       const responseData = await response.json();
       if (!response.ok) {
         throw new Error(responseData.message);
@@ -42,19 +66,13 @@ const Signup = () => {
     } catch (err) {
       setError(err.message);
     }
-
   };
 
   return (
     <div className={styles.signup_container}>
       {loading && (
         <div className={styles.overlay}>
-          <Circles
-            type="Circles"
-            color="#881c1c"
-            height={40}
-            width={40}
-          />
+          <Circles type="Circles" color="#881c1c" height={40} width={40} />
         </div>
       )}
       <div className={styles.signup_form_container}>
@@ -101,11 +119,15 @@ const Signup = () => {
               type="password"
               placeholder="Password"
               name="password"
-              onChange={handleChange}
-              value={data.password}
+              onFocus={() => setPasswordFocused(true)}
+              onChange={(e) => onChangePassword(e.target.value)}
+              value={password}
               required
               className={styles.input}
             />
+            {passwordFocused && (
+              <PasswordStrengthIndicator validity={passwordValidity} />
+            )}
             {error && <div className={styles.error_msg}>{error}</div>}
             <button type="submit" className={styles.red_btn}>
               Sign Up
