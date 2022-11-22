@@ -27,6 +27,8 @@ export const json = {
         "colCount": 0,
         "showNoneItem": true,
         "choices": [ "Worcester","Berkshire","Hampshire","Franklin","Tavola","Tamales","Harvest Cafe","Roots Cafe" ]
-      }
-    ]
+      },
+      
+    ],
+    "completedHtml": "<h3>Preferences Updated</h3>",
   };

@@ -1,4 +1,5 @@
 import { React, useCallback } from "react";
+import { useNavigate } from "react-router";
 
 import { StylesManager, Model } from "survey-core";
 import { Survey } from "survey-react-ui";
@@ -24,7 +25,8 @@ function saveSurveyResults(url, json) {
 }
 
 function SurveyComponent({ type }) {
-
+  
+  const navigate = useNavigate();
   const surveyComplete = useCallback((sender) => {
     const data = {
       userId: localStorage.getItem("userId"),
@@ -34,13 +36,16 @@ function SurveyComponent({ type }) {
     };
     if (type === "edit") {
       saveSurveyResults(`https://umasseatthis.herokuapp.com/user/preferences/${localStorage.getItem("userId")}/edit`, data);
+      navigate("/?type=Etrue");
     } else {
       saveSurveyResults("https://umasseatthis.herokuapp.com/user/preferences", data);
+      navigate("/?type=Ctrue");
     }
-  }, [type]);
+  }, [type, navigate]);
 
   const survey = new Model(json);
   survey.onComplete.add(surveyComplete);
+
   return <Survey model={survey} />;
 }
 
