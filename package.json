@@ -31,7 +31,8 @@
     "react-dom": "^18.2.0",
     "react-loader-spinner": "^5.3.4",
     "react-modal": "^3.16.1",
-    "survey-react-ui": "^1.9.55"
+    "survey-react-ui": "^1.9.55",
+    "typescript": "^4.9.3"
   },
   "devDependencies": {
     "jest": "^29.2.2",
