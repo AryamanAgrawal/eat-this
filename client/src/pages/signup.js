@@ -63,6 +63,7 @@ const Signup = () => {
       navigate("/");
       window.location.reload();
     } catch (err) {
+      setLoading(false);
       setError(err.message);
     }
 
