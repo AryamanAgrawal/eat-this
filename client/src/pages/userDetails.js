@@ -59,8 +59,9 @@ export default class UserDetails extends Component {
               <h1 style={{ textAlign: "center", marginTop: 25 }}>
                 Your Preferences
               </h1>
+               <h3>Ingredients: {this.state.preferenceData.ingredients}</h3>
               <h3>Allergens: {this.state.preferenceData.allergens}</h3>
-              <h3>Ingredients: {this.state.preferenceData.ingredients}</h3>
+             
               <h3>
                 Preferred Location:{" "}
                 {this.state.preferenceData.preferredLocation}
