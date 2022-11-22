@@ -2,8 +2,11 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styles from "./signupStyles.module.css";
 import { Circles } from "react-loader-spinner";
-
+import PasswordStrengthIndicator from "../components/passwordStrength";
 const Signup = () => {
+  const isNumberRegx = /\d/;
+  // eslint-disable-next-line
+  const specialCharacterRegx = /[ !@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/;
 
   const [data, setData] = useState({
     firstName: "",
@@ -14,15 +17,35 @@ const Signup = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const [passwordValidity, setPasswordValidity] = useState({
+    minChar: null,
+    number: null,
+    specialChar: null,
+  });
 
   const handleChange = ({ currentTarget: input }) => {
     setData({ ...data, [input.name]: input.value });
+  };
+
+  const onChangePassword = (password) => {
+    setData({ ...data, password });
+
+    setPasswordValidity({
+      minChar: password.length >= 8 ? true : false,
+      number: isNumberRegx.test(password) ? true : false,
+      specialChar: specialCharacterRegx.test(password) ? true : false,
+    });
   };
 
   const handleSubmit = async (e) => {
     setLoading(true);
     e.preventDefault();
     try {
+      if(!passwordValidity.minChar || !passwordValidity.number || !passwordValidity.specialChar) {
+        setLoading(false);
+        setError("Password requirements not met");
+        return;
+      }
       const response = await fetch("https://umasseatthis.herokuapp.com/register", {
         method: "POST",
         headers: {
@@ -101,11 +124,14 @@ const Signup = () => {
               type="password"
               placeholder="Password"
               name="password"
-              onChange={handleChange}
+              onChange={(e) => onChangePassword(e.target.value)}
               value={data.password}
               required
               className={styles.input}
             />
+           
+            <PasswordStrengthIndicator validity={passwordValidity} />
+            
             {error && <div className={styles.error_msg}>{error}</div>}
             <button type="submit" className={styles.red_btn}>
               Sign Up
