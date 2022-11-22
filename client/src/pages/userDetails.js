@@ -68,7 +68,7 @@ export default class UserDetails extends Component {
               <h1 style={{ textAlign: "center", marginTop: 25 }}>
                 Edit Your Preferences
               </h1>
-              <Survey type={"edit"} />
+              <Survey type={"edit"} preferenceData={this.state.preferenceData}/>
             </>
             :
             <>

@@ -24,7 +24,7 @@ function saveSurveyResults(url, json) {
   request.send(JSON.stringify(json));
 }
 
-function SurveyComponent({ type }) {
+function SurveyComponent({ type, preferenceData }) {
 
   const navigate = useNavigate();
 
@@ -46,6 +46,19 @@ function SurveyComponent({ type }) {
 
   const survey = new Model(json);
   survey.onComplete.add(surveyComplete);
+  if (preferenceData !== null) { // Checks if user has already completed survey once
+    var res = {}
+    res = {
+      data: {
+        ingredients: preferenceData.ingredients,
+        allergens: preferenceData.allergens,
+        preferredLocation: preferenceData.preferredLocation,
+
+      }
+    }
+    if (res.data) 
+      survey.data = res.data;
+  }
   return <Survey model={survey} />;
 }
 
