@@ -26,10 +26,10 @@ export default function Navbar() {
       <NavLink className="nav-item" to="/">
         Home
       </NavLink>
-      <NavLink className="nav-item" to="/dining">
+      <NavLink className="nav-item" to="/diningPage">
         Dining
       </NavLink>
-      <NavLink className="nav-item" to="/user">
+      <NavLink className="nav-item" to="/userPage">
         User
       </NavLink>
     </>
@@ -52,12 +52,12 @@ export default function Navbar() {
         </div>
       ) : (
         <>
-          <NavLink className="nav-item" to="/login">
+          <NavLink className="nav-item" to="/loginPage">
             <button className="login" type="button">
               Log in
             </button>
           </NavLink>
-          <NavLink className="nav-item" to="/signup">
+          <NavLink className="nav-item" to="/signupPage">
             <button className="signup" type="button">
               Sign up
             </button>
@@ -95,12 +95,12 @@ export default function Navbar() {
                 </div>
               ) : (
                 <>
-                  <NavLink className="nav-item" to="/login">
+                  <NavLink className="nav-item" to="/loginPage">
                     <button className="login" type="button">
                       Log in
                     </button>
                   </NavLink>
-                  <NavLink className="nav-item" to="/signup">
+                  <NavLink className="nav-item" to="/signupPage">
                     <button className="signup" type="button">
                       Sign up
                     </button>
@@ -119,8 +119,8 @@ export default function Navbar() {
       <div className="main__navbar">
         <div className="main__navbar-links">
           <div className="main__navbar-links_logo">
-            <img src={logo} alt="logo" />
-            <h1>Eat This!</h1>
+            <a href="/"><img src={logo} alt="logo" /></a>
+            <a href="/"><h1>Eat This!</h1></a>
           </div>
           <div className="main__navbar-links_container">
             {(isDesktopOrLaptop || isBigScreen) && <DesktopNav />}
