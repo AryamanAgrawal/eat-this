@@ -21,6 +21,42 @@ const diningCampusCenter = [
 const mealType = ['#breakfast_menu', '#lunch_menu', '#dinner_menu', '#latenight_menu', '#grabngo'];
 const dbo = require("./db/conn");
 
+function getDiningLocationName(name) {
+    let diningLocationName = "";
+    if (name === "franklin") {
+        diningLocationName = "Franklin Dining Commons";
+    } else if (name === "berkshire") {
+        diningLocationName = "Berkshire Dining Commons";
+    } else if (name === "worcester") {
+        diningLocationName = "Worcester Dining Commons";
+    } else if (name === "hampshire") {
+        diningLocationName = "Hampshire Dining Commons";
+    } else if (name === "french-meadow-café") {
+        diningLocationName = "People's Organic Coffee";
+    } else if (name === "harvest-blue-wall-menu") {
+        diningLocationName = "Harvest Market";
+    } else if (name === "tavola") {
+        diningLocationName = "Tavola";
+    } else if (name === "um-bakery-blue-wall-menu") {
+        diningLocationName = "Yum! Bakery";
+    } else if (name === "green-fields-blue-wall") {
+        diningLocationName = "Green Fields";
+    } else if (name === "tamales-blue-wall-menu") {
+        diningLocationName = "Tamales";
+    } else if (name === "wasabi-blue-wall") {
+        diningLocationName = "Wasabi";
+    } else if (name === "deli-delish-blue-wall") {
+        diningLocationName = "Deli Delish";
+    } else if (name === "star-ginger-blue-wall-menu") {
+        diningLocationName = "Star Ginger";
+    } else if (name === "grill-blue-wall-menu") {
+        diningLocationName = "The Grill";
+    } else if (name === "paciugo-dining-menu") {
+        diningLocationName = "Paciugo";
+    }
+    return diningLocationName;
+}
+
 function getDiningLocationId(name) {
     let diningLocationId = "";
     if (name === "franklin") {
@@ -137,8 +173,8 @@ async function uploadMenuData() {
 
             const foodItems = menu[i][mealType];
 
-            db_connect.collection("foodDummy").deleteMany({});
-            db_connect.collection("foodDummy").insertMany(foodItems, { ordered: false }, function (err, result1) {
+            db_connect.collection("foodItems").deleteMany({});
+            db_connect.collection("foodItems").insertMany(foodItems, { ordered: false }, function (err, result1) {
                 if (err) {
                     // console.log(err);
                     return
@@ -150,16 +186,20 @@ async function uploadMenuData() {
                 }
 
                 let diningLocationId = getDiningLocationId(i);
+                let diningLocationName = getDiningLocationName(i);
 
                 myfindQuery = { diningLocationId: diningLocationId, mealType: mealType };
 
                 let newMenu = {
                     $set: {
+                        diningLocationName: diningLocationName,
+                        diningLocationId: diningLocationId,
+                        mealType: mealType,
                         foodIds: foodIds,
                     },
                 };
 
-                db_connect.collection("menuDummy").updateOne(myfindQuery, newMenu, { upsert: true }, function (err, result2) {
+                db_connect.collection("menus").updateOne(myfindQuery, newMenu, { upsert: true }, function (err, result2) {
                     if (err) {
                         // console.log(err);
                         return;
