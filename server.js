@@ -21,4 +21,5 @@ app.listen(port, async function () {
         if (err) console.error(err);
     });
     console.log(`Server is running on port: ${port}`);
+    scraper.scheduleScrape();
 });

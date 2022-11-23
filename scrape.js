@@ -3,7 +3,6 @@ const constants = require('./constants');
 const rp = require('request-promise');
 const cheerio = require('cheerio');
 const cron = require('node-cron');
-const ObjectId = require("mongodb").ObjectId;
 
 const dining = [
     'berkshire', 'hampshire', 'worcester', 'franklin',
@@ -172,10 +171,12 @@ async function uploadMenuData() {
 
 }
 
-cron.schedule('* * * * *', () => {
-    uploadMenuData();
-    console.log('Scraping menu every 24 hours at 01:00');
-});
+function scheduleScrape() {
+    cron.schedule('0 1 * * *', () => {
+        uploadMenuData();
+        console.log('Scraping menu every 24 hours at 01:00');
+    });
+}
 
 
-// module.exports = { scheduleScrape }
+module.exports = { scheduleScrape }
