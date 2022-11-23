@@ -177,7 +177,7 @@ async function uploadMenuData() {
             db_connect.collection("foodItems").insertMany(foodItems, { ordered: false }, function (err, result1) {
                 if (err) {
                     // console.log(err);
-                    return
+                    return;
                 };
 
                 let foodIds = [];
