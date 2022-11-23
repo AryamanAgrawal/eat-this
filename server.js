@@ -10,7 +10,8 @@ app.use(express.json());
 app.use(require("./routes/record"));
 app.use(require("./routes/user"));
 app.use(require("./routes/dining"));
-
+app.use(require("./routes/menu"));
+app.use(require("./routes/food"));
 // get driver connection
 const dbo = require("./db/conn");
 const scraper = require("./scrape")

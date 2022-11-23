@@ -3,20 +3,56 @@ const menuRoutes = express.Router();
 const dbo = require("../db/conn");
 const ObjectId = require("mongodb").ObjectId;
 
-/** Fetch a single menu by id */
-/** request.body = {} */
-menuRoutes.route("/menu/:diningLocationId").get(function (req, res) {
-    let db_connect = dbo.getDb();
 
-    let myquery = { diningLocationId: ObjectId(req.params.id) };
+/** Fetch multiple menu for a diningLocation using `/menu/:id` */
+/** returns an array of menu objects */
+menuRoutes.route("/menu/:diningLocationId").get(function (req, res) {
+    // send a of menu objects
+    let db_connect = dbo.getDb();
+    let myquery = { diningLocationId: req.params.diningLocationId };
     db_connect
         .collection("menus")
-        .find(myquery, function (err, result) {
+        .findOne(myquery)
+        .toArray(function (err, result) {
             if (err) {
-                res.status(404).json({ message: "Failed to fetch menu", err });
+                res.status(404).json({ message: "Failed to fetch menus", err });
                 throw err;
             }
-            res.status(200).json({ message: "Success: Fetched menu", result });
+            res.status(200).json({ message: "Success: Fetched menus", result });
+        });
+});
+
+/** Fetch one menu using `/menu/:id` */
+/** request.body = {} */
+menuRoutes.route("/menu/:id").get(function (req, res) {
+    let db_connect = dbo.getDb();
+    let myquery = { _id: ObjectId(req.params.id) };
+    db_connect
+        .collection("menus")
+        .findOne(myquery)
+        .toArray(function (err, result) {
+            if (err) {
+                res.status(404).json({ message: "Failed to fetch menus", err });
+                throw err;
+            }
+            res.status(200).json({ message: "Success: Fetched menus", result });
+        });
+});
+
+
+/** Fetch all menus using `/menu` */
+/** request.body = {} */
+menuRoutes.route("/menus").get(function (req, res) {
+    let db_connect = dbo.getDb();
+    db_connect
+        .collection("menus")
+        .find({})
+        .toArray(function (err, result) {
+            if (err) {
+                res.status(404).json({ message: "Failed to fetch menus", err });
+                throw err;
+            }
+            res.status(200).json({ message: "Success: Fetched menus", result });
         });
 });
 
