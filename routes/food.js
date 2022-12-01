@@ -13,16 +13,15 @@ foodRoutes.route("/foods").post(function (req, res) {
     let foodIds = req.body.foodIds;
     let foodArray = [];
     for (let i = 0; i < foodIds.length; i++) {
-        array.push(ObjectId(foodIds[i]));
+        foodArray.push(ObjectId(foodIds[i]));
     }
     let myfindquery = {
         _id: {
             $in: foodArray
         }
     };
-
     db_connect
-        .collection("foodItems")
+        .collection("foodDummy")
         .find(myfindquery)
         .toArray(function (err, result) {
             if (err) {
