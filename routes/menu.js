@@ -11,7 +11,7 @@ menuRoutes.route("/menu/dining/:diningLocationId").get(function (req, res) {
     let db_connect = dbo.getDb();
     let myquery = { diningLocationId: req.params.diningLocationId };
     db_connect
-        .collection("menus")
+        .collection("menuDummy")
         .find(myquery)
         .toArray(function (err, result) {
             if (err) {
