@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./navbar.css";
 import { RiMenu3Line, RiCloseLine } from "react-icons/ri";
 import logo from "../assets/logo.png";
+import Tour from "./tour";
 
 // We import bootstrap to make our application look better.
 import "bootstrap/dist/css/bootstrap.css";
@@ -11,6 +12,7 @@ import { NavLink } from "react-router-dom";
 
 // import MediaQuery for mobile-responsive;
 import { useMediaQuery } from "react-responsive";
+
 
 // Here, we display our Navbar
 export default function Navbar() {
@@ -23,15 +25,16 @@ export default function Navbar() {
   //Menu one the Navbar
   const Menu = () => (
     <>
-      <NavLink className="nav-item" to="/">
+      <NavLink className="nav-item home" to="/">
         Home
       </NavLink>
-      <NavLink className="nav-item" to="/diningPage">
+      <NavLink className="nav-item dining" to="/diningPage">
         Dining
       </NavLink>
-      <NavLink className="nav-item" to="/userPage">
+      <NavLink className="nav-item user" to="/userPage">
         User
       </NavLink>
+      <Tour/>
     </>
   );
 
@@ -57,7 +60,7 @@ export default function Navbar() {
               Log in
             </button>
           </NavLink>
-          <NavLink className="nav-item" to="/signupPage">
+          <NavLink className="nav-item sign" to="/signupPage">
             <button className="signup" type="button">
               Sign up
             </button>
