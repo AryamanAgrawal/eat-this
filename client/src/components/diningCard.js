@@ -22,7 +22,9 @@ function DiningCard() {
 
     useEffect(() => {
         const fetchData = async () => {
-            const response = await fetch(`https://umasseatthis.herokuapp.com/dining`);
+            // const response = await fetch(`https://umasseatthis.herokuapp.com/dining`);
+            const response = await fetch(`http://localhost:8000/dining`);
+            
 
             if (!response.ok) {
                 const message = `An error occurred: ${response.statusText}`;
