@@ -1,33 +1,27 @@
-
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 function Menu({ diningLocationId }) {
-    //Menu Object
-    // const [menuData, setMenuData] = useState([]);
-    // const [foodData, setFoodData] = useState([]);
+
+    const [foodName, setFoodName] = useState('');
 
     useEffect(() => {
         let menuData = [];
         let foodData = [];
-
+        
+        //Menu Object
         const fetchMenuData = async () => {
 
             try {
                 // return menu object for the desired dinning commons                
                 const response = await fetch(`http://localhost:8000/menu/dining/${diningLocationId}`);
-
-                if (!response.ok) {
-                    const message = `An error occurred: ${response.statusText}`;
-                    window.alert(message);
-                    return;
-                }
+                
                 const records = await response.json();
                 if (!response.ok) {
                     throw new Error(records.message);
                 }
+                
                 menuData = records.result[0].foodIds;
-                //store foodIds array of the first menu                
-
+                //store foodIds array of the first menu   
             } catch (e) {
                 console.log(e);
             }
@@ -50,7 +44,10 @@ function Menu({ diningLocationId }) {
                 if (!response.ok) {
                     throw new Error(responseData.message);
                 }
-                foodData = responseData;
+                foodData = responseData.result;
+                var foodNametemp = '';
+                foodData.forEach(d => foodNametemp += d.dishName + "<br />");
+                setFoodName(foodNametemp);
             } catch (e) {
                 console.log(e);
             }
@@ -59,16 +56,11 @@ function Menu({ diningLocationId }) {
         fetchFoodData();
 
     }, [diningLocationId]);
-
+    
     const MenuComponent = () => (
         <>
             <div className="menu-container">
-                {/* {foodData.map((data, key) => (
-                    <div key={key}>
-                        {data.dishName}
-                        <br/>
-                    </div>
-                ))} */}
+                <p dangerouslySetInnerHTML={{__html: foodName}} />
             </div>
         </>
     )
