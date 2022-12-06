@@ -5,8 +5,8 @@ import "./diningCard.css"
 import Modal from "react-modal";
 import { getDistance } from 'geolib';
 import useCurrentLocation from "../components/geo-location";
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faLocationArrow } from '@fortawesome/fontawesome-free-solid'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faLocationArrow } from '@fortawesome/fontawesome-free-solid'
 import Menu from "./menu"
 
 const geolocationOptions = {
@@ -16,40 +16,37 @@ const geolocationOptions = {
 };
 
 function DiningCard() {
-    const { location, error} = useCurrentLocation(geolocationOptions);
-    console.log(error);
+    const { location, error } = useCurrentLocation(geolocationOptions);
     const [diningData, setDiningData] = useState([]);
 
     useEffect(() => {
         const fetchData = async () => {
-            // const response = await fetch(`https://umasseatthis.herokuapp.com/dining`);
             const response = await fetch(`http://localhost:8000/dining`);
-            
 
             if (!response.ok) {
                 const message = `An error occurred: ${response.statusText}`;
                 window.alert(message);
+                console.log(error);
                 return;
             }
 
             const records = await response.json();
 
-            if (location === undefined) {            
-                setDiningData(records.result);              
-            }else{
+            if (location === undefined) {
+                setDiningData(records.result);
+            } else {
                 const diningArray = records.result;
-                diningArray.sort((a,b)=> {
-                    const aDistance = getDistance(location,{latitude : a.location.latitude, longitude: a.location.longitude});
-                    const bDistance = getDistance(location,{latitude : b.location.latitude, longitude: b.location.longitude});
-                    return  aDistance - bDistance; 
+                diningArray.sort((a, b) => {
+                    const aDistance = getDistance(location, { latitude: a.location.latitude, longitude: a.location.longitude });
+                    const bDistance = getDistance(location, { latitude: b.location.latitude, longitude: b.location.longitude });
+                    return aDistance - bDistance;
                 })
-                console.log(diningArray);
                 setDiningData(diningArray);
             }
 
         }
         fetchData();
-    }, [location])
+    }, [location, error])
 
     const [isOpen, setIsOpen] = useState(false);
     const [selectedInd, setSelectedInd] = React.useState(-1);
@@ -61,7 +58,7 @@ function DiningCard() {
     }
 
     const openURL = url => {
-        window.open(url,'_blank','noopener,noreferrer');
+        window.open(url, '_blank', 'noopener,noreferrer');
 
     };
 
@@ -108,16 +105,16 @@ function DiningCard() {
                 <div className='modal-container-second'>
                     <div className='modal-address'>{diningData[selectedInd].location.address}</div>
                     <div className='modal-button-nav'>
-                        <Button variant="success" onClick = {() => openURL('https://www.google.com/maps/dir/?api=1&origin=' + location.latitude + ',' + location.longitude + '&destination=' + diningData[selectedInd].location.latitude + ',' + diningData[selectedInd].location.longitude + '&travelmode=walking')}>
-                            <div className='modal-button-nav-text'>Navigate</div> 
-                            <FontAwesomeIcon icon={faLocationArrow}/>          
+                        <Button variant="success" onClick={() => openURL('https://www.google.com/maps/dir/?api=1&origin=' + location.latitude + ',' + location.longitude + '&destination=' + diningData[selectedInd].location.latitude + ',' + diningData[selectedInd].location.longitude + '&travelmode=walking')}>
+                            <div className='modal-button-nav-text'>Navigate</div>
+                            <FontAwesomeIcon icon={faLocationArrow} />
                         </Button>
                     </div>
                 </div>
                 <div className='modal-container-third'>
                     <div className="modal-menu-scroll">
-                        <Menu 
-                            diningLocationId={diningData[selectedInd]._id}/>
+                        <Menu
+                            diningLocationId={diningData[selectedInd]._id} />
                     </div>
                 </div>
 

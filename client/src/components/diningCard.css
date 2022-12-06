@@ -7,19 +7,62 @@
   display: flex;
 }
 
-.card {
-  flex-direction: row;
-  align-items: center;
+.onCampus{
+  width: 50%;
+  padding: 10px;
+}
+
+
+.title p{
+  color: white;
+  margin:0px;
+  font-size:17px;
+  font-weight: bold;
+}
+
+.title{
+  padding:7px;
+  margin-left: 7px;
+  margin-bottom: 10px;
+  width: 110px;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.19);
+}
+
+
+.offCampus{
+  width: 50%;
+  padding: 10px;
+}
+
+.container {
+  padding : 7px;
+  border-top-right-radius: 0.5rem;
+  border-bottom-right-radius: 0.5rem;
+  border-bottom-left-radius: 0.5rem;
+  
 }
 
 .card {
+  flex-direction: row;
+  align-items: center;
   font-size: 1em;
   overflow: hidden;
   padding: 5;
   border: none;
   border-radius: .28571429rem;
   box-shadow: 0 1px 3px 0 #d4d4d5, 0 0 0 1px #d4d4d5;
-  margin-top: 20px;
+  margin: 0px 0px 20px 0px;
+  box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.19);
+  max-height: 110px;
+}
+
+.onCampusCard:hover{
+  box-shadow: 0 4px 5px 0 rgba(155, 215, 159, 0.993), 0 6px 10px 0 rgb(226, 255, 237);
+}
+
+.offCampusCard:hover{
+  box-shadow: 0 4px 5px 0 rgba(238, 166, 166, 0.993), 0 6px 10px 0 rgb(252, 196, 196);
 }
 
 .card-block {
@@ -35,6 +78,7 @@
 
 .card img {
   width: 30%;
+  object-fit: cover;
   border-top-right-radius: 0;
   border-bottom-left-radius: calc(0.25rem - 1px);
 }
@@ -177,6 +221,10 @@
     width: 50%;
   }
 
+  .offCampus,.onCampus{
+    width: 100%;
+  }
+
   .modal{
     width: 70%;
     height: 70%;
@@ -225,15 +273,4 @@
   .modal-menu-scroll {
     font-size: small;
   }
-
-  
-
-
-}
-
-@media only screen and (max-width: 1200px) {
-  .card img {
-    width: 40%;
-  }
-
 }
