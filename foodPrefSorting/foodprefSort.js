@@ -18,7 +18,7 @@ let userPreference = {
     "userId": "63629d6ad8308303c3383d37",
     "preferredLocation": [
         "636803f74459bcab97ecca75", // frank
-        "636803044459bcab97ecca71" // worcester
+        // "636803044459bcab97ecca71" // worcester
     ],
     "allergens": [
         "Milk",
@@ -574,43 +574,51 @@ let score = new Map();
 
 //prefered location matching, if match get 1 point and record location
 diningLocations.map((location) => {
-
-    userLocations.map((prefered) => {
-        if (location.localeCompare(prefered)) {
-            score.set(prefered, 1);
+    if (!score.has(location)) {
+        score.set(location, 0);
+    }
+    userLocations.map((preferedLocation) => {
+        if (location.localeCompare(preferedLocation)) {
+            let temp = score.get(preferedLocation);
+            score.set(preferedLocation, temp + 1);
         }
     });
 });
 
+console.log(score);
 
 for (let location of score.keys()) {
-    //first step: get menu from database, concern: different meal time
-    let menu = null;
-    for (let m of dummyMenus) {
-        if (location.localeCompare(m["diningLocationId"])) {
-            menu = m["foodIds"];
+    // first step: get menu from database, concern: different meal time
+    let locationMenu = null;
+    for (let obj of dummyMenus) {
+        if (location.localeCompare(obj["diningLocationId"])) {
+            locationMenu = obj["foodIds"];
             break;
         }
     }
+
     /**
      * if we got the menu from the database, we try to retrieve the dish ingredients, 
      * then loop through the ingredients list and  see if there's any matching.
      * For every matching(i.e. found matched ingredient and no allergens found), get 1 point.
     **/
 
-    if (menu !== null) {
-        for (let dish of menu) {
-            let dishid = dish["$oid"];
+    if (locationMenu !== null) {
+        for (let dish of locationMenu) {
+            let dishId = dish["$oid"];
             let discovered = null;
-            for (let getdish of foodItems) {
-                if (dishid.localeCompare(getdish["_id"]["$oid"])) {
-                    discovered = getdish["ingredients"];
+            for (let getDish of foodItems) {
+                if (dishId.localeCompare(getDish["_id"]["$oid"])) {
+                    discovered = getDish["ingredients"];
                     break;
                 }
             }
             if (discovered !== null) {
                 discovered.forEach((ingredient) => {
-                    if (userIngredients.includes(ingredient) && !(userAllergens.includes(ingredient))) {
+                    if (userAllergens.includes(ingredient)) {
+                        score.set(location, score.get(location));
+                    }
+                    if (userIngredients.includes(ingredient)) {
                         score.set(location, score.get(location) + 1);
                     }
                 });
@@ -623,7 +631,9 @@ for (let location of score.keys()) {
 console.log(score);
 
 
+let getUserPreferenceSorting = () => {
 
+}
 
 
 
