@@ -47,6 +47,40 @@ diningRoutes.route("/dining").get(function (req, res) {
         });
 });
 
+/** Fetch on-campus dining locations using `/dining/on-campus` */
+/** request.body = {} */
+diningRoutes.route("/dining/on-campus").get(function (req, res) {
+    let db_connect = dbo.getDb();
+    let myquery = { onCampus: true };
+    db_connect
+        .collection("diningLocations")
+        .find(myquery)
+        .toArray(function (err, result) {
+            if (err) {
+                res.status(404).json({ message: "Failed to fetch dining locations", err });
+                throw err;
+            }
+            res.status(200).json({ message: "Success: Fetched dining locations", result });
+        });
+});
+
+/** Fetch off-campus dining locations using `/dining/off-campus` */
+/** request.body = {} */
+diningRoutes.route("/dining/on-campus").get(function (req, res) {
+    let db_connect = dbo.getDb();
+    let myquery = { onCampus: false };
+    db_connect
+        .collection("diningLocations")
+        .find(myquery)
+        .toArray(function (err, result) {
+            if (err) {
+                res.status(404).json({ message: "Failed to fetch dining locations", err });
+                throw err;
+            }
+            res.status(200).json({ message: "Success: Fetched dining locations", result });
+        });
+});
+
 /** Fetch a single dining document by id */
 /** request.body = {} */
 diningRoutes.route("/dining/:id").get(function (req, res) {
