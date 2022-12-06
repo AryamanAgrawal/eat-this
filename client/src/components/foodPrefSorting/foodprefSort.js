@@ -9,7 +9,7 @@
 
 let userLocations = [], userAllgergens = [], userIngredients =[];
 
- let userPreference = {
+let userPreference = {
     "_id": {
         "$oid": "6369f468b221e2e7d265056b"
     },//unique user food preference id
