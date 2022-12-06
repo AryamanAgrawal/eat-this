@@ -46,7 +46,7 @@ function DiningCard() {
 
         }
         fetchData();
-    }, [location])
+    }, [location,error])
 
     const [isOpen, setIsOpen] = useState(false);
     const [selectedInd, setSelectedInd] = React.useState(-1);
