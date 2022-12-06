@@ -66,7 +66,7 @@ diningRoutes.route("/dining/on-campus").get(function (req, res) {
 
 /** Fetch off-campus dining locations using `/dining/off-campus` */
 /** request.body = {} */
-diningRoutes.route("/dining/on-campus").get(function (req, res) {
+diningRoutes.route("/dining/off-campus").get(function (req, res) {
     let db_connect = dbo.getDb();
     let myquery = { onCampus: false };
     db_connect

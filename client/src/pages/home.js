@@ -1,10 +1,12 @@
 import React from "react";
-import DiningCard from "../components/diningCard";
+import "./home.css";
+import Button from 'react-bootstrap/Button';
+import DiningOnCampus from "../components/diningOnCampus";
+import DiningOffCampus from "../components/diningOffCampus";
 
 const Home = () => {
   const urlParams = new URLSearchParams(window.location.search);
   const myParam = urlParams.get("type");
-  console.log(myParam);
   if (myParam === "Ctrue"){
     alert("You have successfully saved your preferences!");
   }
@@ -18,9 +20,12 @@ const Home = () => {
       ) : (
         <h1 style={{ textAlign: "center" }}>Home Page</h1>
       )}
+      
+      <div><a href="/diningPage"><Button className="seeAllButton">See All</Button></a></div>
       <div className="home-cards">
-        <DiningCard/>
-      </div>
+        <DiningOnCampus/>
+        <DiningOffCampus/>
+      </div>   
     </div>
   );
 };

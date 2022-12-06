@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Card, Row, Col, Container } from "react-bootstrap";
+import { Card, Col, Container } from "react-bootstrap";
 import Button from 'react-bootstrap/Button';
 import "./diningCard.css"
 import Modal from "react-modal";
@@ -15,13 +15,13 @@ const geolocationOptions = {
     maximumAge: 1000 * 60 * 5, // 5 mins
 };
 
-function DiningCard() {
+function DiningOnCampus() {
     const { location, error} = useCurrentLocation(geolocationOptions);
     const [diningData, setDiningData] = useState([]);
 
     useEffect(() => {
         const fetchData = async () => {
-            const response = await fetch(`http://localhost:8000/dining`);
+            const response = await fetch(`http://localhost:8000/dining/on-campus`);
 
             if (!response.ok) {
                 const message = `An error occurred: ${response.statusText}`;
@@ -41,12 +41,12 @@ function DiningCard() {
                     const bDistance = getDistance(location,{latitude : b.location.latitude, longitude: b.location.longitude});
                     return  aDistance - bDistance; 
                 })
-                setDiningData(diningArray);
+                setDiningData(diningArray.slice(0,9));
             }
 
         }
         fetchData();
-    }, [location])
+    }, [location,error])
 
     const [isOpen, setIsOpen] = useState(false);
     const [selectedInd, setSelectedInd] = React.useState(-1);
@@ -65,22 +65,26 @@ function DiningCard() {
 
     const DiningComponent = () => (
         <>
+        <div className="onCampus">
+            <div className= "title bg-success">
+                <p>On Campus</p>
+            </div>
+            
             <Container>
-                <Row guter={40} className="row">
-                    {diningData.map((value, index) => (
-                        <Col key={index} xs={12} md={6} lg={6}>
-                            <Card onClick={() => { setSelectedInd(index); setIsOpen(true); }}>
-                                <Card.Img src={value.image} alt="dining images" />
-                                <Card.Body>
-                                    <Card.Title className='card-title'><div className="card-rank"><p className="badge bg-dark">{index + 1}</p><span className="badge bg-success">{value.onCampus ? "On Campus" : "Off Campus"}</span></div><p>{value.name}</p> </Card.Title>
-                                    <Card.Text className="cardlocation">{value.location.address}</Card.Text>
-
-                                </Card.Body>
-                            </Card>
-                        </Col>
-                    ))}
-                </Row>
+                {diningData.map((value, index) => (
+                    <Col key={index}>
+                        <Card className="onCampusCard" onClick={() => { setSelectedInd(index); setIsOpen(true); }}>
+                            <Card.Img src={value.image} alt="dining images" />
+                            <Card.Body>
+                                <Card.Title className='card-title'><div className="card-rank"><p className="badge bg-dark">{index + 1}</p><span className="badge bg-success">{value.onCampus ? "On Campus" : "Off Campus"}</span></div><p>{value.name}</p> </Card.Title>
+                                <Card.Text className="cardlocation">{value.location.address}</Card.Text>
+                            </Card.Body>
+                        </Card>
+                    </Col>
+                ))}
             </Container>
+        </div>
+            
 
             {modal && <Modal
                 isOpen={isOpen}
@@ -138,4 +142,4 @@ function DiningCard() {
     );
 };
 
-export default DiningCard;
+export default DiningOnCampus;
