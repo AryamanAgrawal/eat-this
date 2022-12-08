@@ -7,7 +7,6 @@ import { getDistance } from 'geolib';
 import useCurrentLocation from "../components/geo-location";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faLocationArrow } from '@fortawesome/fontawesome-free-solid'
-import Menu from "./menu"
 
 const geolocationOptions = {
     enableHighAccuracy: true,
@@ -69,12 +68,11 @@ function DiningCard() {
                 <Row guter={40} className="row">
                     {diningData.map((value, index) => (
                         <Col key={index} xs={12} md={6} lg={6}>
-                            <Card onClick={() => { setSelectedInd(index); setIsOpen(true); }}>
+                            <Card className ="diningCard" onClick={() => { setSelectedInd(index); setIsOpen(true); }}>
                                 <Card.Img src={value.image} alt="dining images" />
                                 <Card.Body>
-                                    <Card.Title className='card-title'><div className="card-rank"><p className="badge bg-dark">{index + 1}</p><span className="badge bg-success">{value.onCampus ? "On Campus" : "Off Campus"}</span></div><p>{value.name}</p> </Card.Title>
+                                    <Card.Title className='card-title'><div className="card-rank"><p className="badge bg-dark">{index + 1}</p>{value.onCampus ? <span className="badge bg-success">On Campus</span> : <span className="badge bg-danger">Off Campus</span> }</div><p>{value.name}</p> </Card.Title>
                                     <Card.Text className="cardlocation">{value.location.address}</Card.Text>
-
                                 </Card.Body>
                             </Card>
                         </Col>
@@ -97,24 +95,27 @@ function DiningCard() {
                     <img className='modal-image' src={diningData[selectedInd].image} alt="dining images" />
                     <div className='modal-name-bottom-left'>{diningData[selectedInd].name}</div>
                     <div className='modal-button-close'>
-                        <Button variant="danger" onClick={toggleModal}>
+                        <Button variant="danger" className="nav-button" onClick={toggleModal}>
                             <span className="material-symbols-outlined">close</span>
                         </Button>
                     </div>
                 </div>
                 <div className='modal-container-second'>
                     <div className='modal-address'>{diningData[selectedInd].location.address}</div>
-                    <div className='modal-button-nav'>
-                        <Button variant="success" onClick={() => openURL('https://www.google.com/maps/dir/?api=1&origin=' + location.latitude + ',' + location.longitude + '&destination=' + diningData[selectedInd].location.latitude + ',' + diningData[selectedInd].location.longitude + '&travelmode=walking')}>
-                            <div className='modal-button-nav-text'>Navigate</div>
-                            <FontAwesomeIcon icon={faLocationArrow} />
-                        </Button>
-                    </div>
                 </div>
                 <div className='modal-container-third'>
-                    <div className="modal-menu-scroll">
-                        <Menu
-                            diningLocationId={diningData[selectedInd]._id} />
+                <div className='modal-button'>
+                        <Button variant="success" className = "navButton" onClick = {() => openURL(diningData[selectedInd].menu)}>
+                            <div className='modal-button-nav-text'>View Menu</div> 
+                            <FontAwesomeIcon icon="fa-solid fa-bars" />          
+                        </Button>
+                    </div>
+
+                    <div className='modal-button'>
+                        <Button variant="success" className = "navButton" onClick = {() => openURL('https://www.google.com/maps/dir/?api=1&origin=' + location.latitude + ',' + location.longitude + '&destination=' + diningData[selectedInd].location.latitude + ',' + diningData[selectedInd].location.longitude + '&travelmode=walking')}>
+                            <div className='modal-button-nav-text'>Navigate</div> 
+                            <FontAwesomeIcon icon={faLocationArrow}/>          
+                        </Button>
                     </div>
                 </div>
 

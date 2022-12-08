@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Survey from "../components/survey/survey";
+import "./userDetails.css"
 
 export default class UserDetails extends Component {
   constructor(props) {
@@ -51,17 +52,17 @@ export default class UserDetails extends Component {
         <div>
           <h1 style={{ textAlign: "center", marginTop: 25 }}>Your Details</h1>
 
-          <h3>Name: {this.state.userData.firstName}</h3>
-          <h3>Email: {this.state.userData.email}</h3>
+          <h3 className="userText">Name: {this.state.userData.firstName}</h3>
+          <h3 className="userText">Email: {this.state.userData.email}</h3>
 
           {this.state.preferenceData !== null ?
             <>
               <h1 style={{ textAlign: "center", marginTop: 25 }}>
                 Your Preferences
               </h1>
-              <h3>Allergens: {this.state.preferenceData.allergens}</h3>
-              <h3>Ingredients: {this.state.preferenceData.ingredients}</h3>
-              <h3>
+              <h3 className="userText">Allergens: {this.state.preferenceData.allergens}</h3>
+              <h3 className="userText">Ingredients: {this.state.preferenceData.ingredients}</h3>
+              <h3 className="userText">
                 Preferred Location:{" "}
                 {this.state.preferenceData.preferredLocation}
               </h3>

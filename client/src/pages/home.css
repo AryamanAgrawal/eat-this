@@ -3,6 +3,10 @@
     flex-direction: row;
 }
 
+.headerText{
+    text-align: center;
+    margin: 10px 0px;
+}
 .seeAllButton{
     position:absolute;
     border: none;
