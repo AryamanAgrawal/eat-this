@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Card, Row, Col, Container } from "react-bootstrap";
+import { Card, Col, Container } from "react-bootstrap";
 import Button from 'react-bootstrap/Button';
 import "./diningCard.css"
 import Modal from "react-modal";
@@ -8,19 +8,21 @@ import useCurrentLocation from "../components/geo-location";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faLocationArrow } from '@fortawesome/fontawesome-free-solid'
 
+
+
 const geolocationOptions = {
     enableHighAccuracy: true,
     timeout: 1000 * 60 * 1, // 1 min (1000 ms * 60 sec * 1 minute = 60 000ms)
     maximumAge: 1000 * 60 * 5, // 5 mins
 };
 
-function DiningCard() {
+function DiningOffCampus() {
     const { location, error } = useCurrentLocation(geolocationOptions);
     const [diningData, setDiningData] = useState([]);
 
     useEffect(() => {
         const fetchData = async () => {
-            const response = await fetch(`https://umasseatthis.herokuapp.com/dining`);
+            const response = await fetch(`https://umasseatthis.herokuapp.com/dining/off-campus`);
 
             if (!response.ok) {
                 const message = `An error occurred: ${response.statusText}`;
@@ -40,7 +42,7 @@ function DiningCard() {
                     const bDistance = getDistance(location, { latitude: b.location.latitude, longitude: b.location.longitude });
                     return aDistance - bDistance;
                 })
-                setDiningData(diningArray);
+                setDiningData(diningArray.slice(0, 9));
             }
 
         }
@@ -64,21 +66,26 @@ function DiningCard() {
 
     const DiningComponent = () => (
         <>
-            <Container>
-                <Row guter={40} className="row">
+            <div className="offCampus">
+                <div className="title bg-danger ">
+                    <p>Off Campus</p>
+                </div>
+
+                <Container>
                     {diningData.map((value, index) => (
-                        <Col key={index} xs={12} md={6} lg={6}>
-                            <Card className="diningCard" onClick={() => { setSelectedInd(index); setIsOpen(true); }}>
+                        <Col key={index}>
+                            <Card className="offCampusCard" onClick={() => { setSelectedInd(index); setIsOpen(true); }}>
                                 <Card.Img src={value.image} alt="dining images" />
                                 <Card.Body>
-                                    <Card.Title className='card-title'><div className="card-rank"><p className="badge bg-dark">{index + 1}</p>{value.onCampus ? <span className="badge bg-success">On Campus</span> : <span className="badge bg-danger">Off Campus</span>}</div><p>{value.name}</p> </Card.Title>
+                                    <Card.Title className='card-title'><div className="card-rank"><p className="badge bg-dark">{index + 1}</p><span className="badge bg-danger">{value.onCampus ? "On Campus" : "Off Campus"}</span></div><p>{value.name}</p> </Card.Title>
                                     <Card.Text className="cardlocation">{value.location.address}</Card.Text>
                                 </Card.Body>
                             </Card>
                         </Col>
                     ))}
-                </Row>
-            </Container>
+                </Container>
+            </div>
+
 
             {modal && <Modal
                 isOpen={isOpen}
@@ -95,7 +102,7 @@ function DiningCard() {
                     <img className='modal-image' src={diningData[selectedInd].image} alt="dining images" />
                     <div className='modal-name-bottom-left'>{diningData[selectedInd].name}</div>
                     <div className='modal-button-close'>
-                        <Button variant="danger" className="nav-button" onClick={toggleModal}>
+                        <Button variant="danger" onClick={toggleModal}>
                             <span className="material-symbols-outlined">close</span>
                         </Button>
                     </div>
@@ -118,8 +125,6 @@ function DiningCard() {
                         </Button>
                     </div>
                 </div>
-
-
             </Modal>}
         </>
     )
@@ -128,4 +133,4 @@ function DiningCard() {
     );
 };
 
-export default DiningCard;
+export default DiningOffCampus;

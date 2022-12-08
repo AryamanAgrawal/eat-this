@@ -1,7 +1,8 @@
-import { React, useCallback } from "react";
+import { React} from "react";
 
 import { StylesManager, Model } from "survey-core";
 import { Survey } from "survey-react-ui";
+import { useNavigate } from "react-router";
 
 import "survey-core/modern.css";
 import "survey-core/defaultV2.css";
@@ -23,9 +24,11 @@ function saveSurveyResults(url, json) {
   request.send(JSON.stringify(json));
 }
 
-function SurveyComponent({ type }) {
+function SurveyComponent({ type, preferenceData }) {
 
-  const surveyComplete = useCallback((sender) => {
+  const navigate = useNavigate();
+
+  const surveyComplete = (sender) => {
     const data = {
       userId: localStorage.getItem("userId"),
       preferredLocation: sender.data["preferredLocation"],
@@ -34,13 +37,28 @@ function SurveyComponent({ type }) {
     };
     if (type === "edit") {
       saveSurveyResults(`https://umasseatthis.herokuapp.com/user/preferences/${localStorage.getItem("userId")}/edit`, data);
+      navigate("/?type=Etrue");
     } else {
       saveSurveyResults("https://umasseatthis.herokuapp.com/user/preferences", data);
+      navigate("/?type=Ctrue");
     }
-  }, [type]);
+  };
 
   const survey = new Model(json);
   survey.onComplete.add(surveyComplete);
+  if (preferenceData !== null) { // Checks if user has already completed survey once
+    var res = {}
+    res = {
+      data: {
+        ingredients: preferenceData.ingredients,
+        allergens: preferenceData.allergens,
+        preferredLocation: preferenceData.preferredLocation,
+
+      }
+    }
+    if (res.data) 
+      survey.data = res.data;
+  }
   return <Survey model={survey} />;
 }
 
