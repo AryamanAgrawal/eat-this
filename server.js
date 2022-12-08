@@ -14,7 +14,6 @@ app.use(require("./routes/menu"));
 app.use(require("./routes/food"));
 // get driver connection
 const dbo = require("./db/conn");
-// const scraper = require("./scrape")
 
 app.listen(port, async function () {
     // perform a database connection when server starts
@@ -22,5 +21,4 @@ app.listen(port, async function () {
         if (err) console.error(err);
     });
     console.log(`Server is running on port: ${port}`);
-    // scraper.scheduleScrape();
 });
