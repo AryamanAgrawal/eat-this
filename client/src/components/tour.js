@@ -19,17 +19,17 @@ const TOUR_STEPS = [
   {
     target: ".home",
     content:
-      "This is the home page. You can see the closest dining halls to you and their live menu."
+      "On the home page, you can see the top 10 closest on-campus or off-campus dining locations, see their live menu and navigate to them."
   },
   {
     target: ".dining",
     content:
-      "This is the dining page. You can see all the dining halls and their live menu."
+      "This is the dining page. You can see all the dining locations here."
   },
   {
     target: ".user",
     content:
-      "This is where you can set your food preferences."
+      "This is where you can view your account details."
   },
   
 ];
