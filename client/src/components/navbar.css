@@ -48,6 +48,7 @@
     text-transform: capitalize;
     margin: 0.5rem 1rem;
     cursor: pointer;
+    padding: 0px;
 }
 
 .nav-item button{
