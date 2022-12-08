@@ -8,6 +8,8 @@ import "bootstrap/dist/css/bootstrap.css";
 
 // We import NavLink to utilize the react router.
 import { NavLink } from "react-router-dom";
+import Tour from "./tour";
+
 
 // import MediaQuery for mobile-responsive;
 import { useMediaQuery } from "react-responsive";
@@ -23,15 +25,17 @@ export default function Navbar() {
   //Menu one the Navbar
   const Menu = () => (
     <>
-      <NavLink className="nav-item" to="/">
+      <NavLink className="nav-item home" to="/">
         Home
       </NavLink>
-      <NavLink className="nav-item" to="/dining">
+      <NavLink className="nav-item dining" to="/diningPage">
         Dining
       </NavLink>
-      <NavLink className="nav-item" to="/user">
+      <NavLink className="nav-item user" to="/userPage">
         User
       </NavLink>
+      <Tour/>
+
     </>
   );
 
@@ -52,12 +56,12 @@ export default function Navbar() {
         </div>
       ) : (
         <>
-          <NavLink className="nav-item" to="/login">
+          <NavLink className="nav-item" to="/loginPage">
             <button className="login" type="button">
               Log in
             </button>
           </NavLink>
-          <NavLink className="nav-item" to="/signup">
+          <NavLink className="nav-item sign" to="/signupPage">
             <button className="signup" type="button">
               Sign up
             </button>
@@ -95,12 +99,12 @@ export default function Navbar() {
                 </div>
               ) : (
                 <>
-                  <NavLink className="nav-item" to="/login">
+                  <NavLink className="nav-item" to="/loginPage">
                     <button className="login" type="button">
                       Log in
                     </button>
                   </NavLink>
-                  <NavLink className="nav-item" to="/signup">
+                  <NavLink className="nav-item" to="/signupPage">
                     <button className="signup" type="button">
                       Sign up
                     </button>
@@ -119,8 +123,8 @@ export default function Navbar() {
       <div className="main__navbar">
         <div className="main__navbar-links">
           <div className="main__navbar-links_logo">
-            <img src={logo} alt="logo" />
-            <h1>Eat This!</h1>
+            <a href="/"><img src={logo} alt="logo" /></a>
+            <a href="/"><h1>Eat This!</h1></a>
           </div>
           <div className="main__navbar-links_container">
             {(isDesktopOrLaptop || isBigScreen) && <DesktopNav />}

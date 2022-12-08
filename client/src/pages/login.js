@@ -33,6 +33,7 @@ const Login = () => {
       navigate("/");
       window.location.reload();
     } catch (err) {
+      setLoading(false);
       setError(err.message);
     }
   };
@@ -79,8 +80,8 @@ const Login = () => {
         </div>
 
         <div className={styles.right}>
-          <h1>New Here?</h1>
-          <Link to="/signup">
+          <h1>New Here ?</h1>
+          <Link to="/signupPage">
             <button type="button" className={styles.white_btn}>
               Sign Up
             </button>

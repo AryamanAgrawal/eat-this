@@ -7,19 +7,66 @@
   display: flex;
 }
 
-.card {
-  flex-direction: row;
-  align-items: center;
+.onCampus {
+  width: 50%;
+  padding: 10px;
+}
+
+
+.title p {
+  color: white;
+  margin: 0px;
+  font-size: 17px;
+  font-weight: bold;
+}
+
+.title {
+  padding: 7px;
+  margin-left: 7px;
+  margin-bottom: 10px;
+  width: 120px;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.19);
+}
+
+
+.offCampus {
+  width: 50%;
+  padding: 10px;
+}
+
+.container {
+  padding: 7px;
+  border-top-right-radius: 0.5rem;
+  border-bottom-right-radius: 0.5rem;
+  border-bottom-left-radius: 0.5rem;
+
 }
 
 .card {
+  flex-direction: row;
+  align-items: center;
   font-size: 1em;
   overflow: hidden;
   padding: 5;
   border: none;
   border-radius: .28571429rem;
   box-shadow: 0 1px 3px 0 #d4d4d5, 0 0 0 1px #d4d4d5;
-  margin-top: 20px;
+  margin: 0px 0px 20px 0px;
+  box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.19);
+  height: 110px;
+}
+
+.onCampusCard:hover {
+  box-shadow: 0 4px 5px 0 rgba(155, 215, 159, 0.993), 0 6px 10px 0 rgb(226, 255, 237);
+}
+
+.offCampusCard:hover {
+  box-shadow: 0 4px 5px 0 rgba(238, 166, 166, 0.993), 0 6px 10px 0 rgb(252, 196, 196);
+}
+
+.diningCard:hover {
+  box-shadow: 0 4px 5px 0 rgba(166, 180, 238, 0.993), 0 6px 10px 0 rgb(196, 215, 252);
 }
 
 .card-block {
@@ -35,15 +82,16 @@
 
 .card img {
   width: 30%;
+  object-fit: cover;
   border-top-right-radius: 0;
   border-bottom-left-radius: calc(0.25rem - 1px);
 }
 
-.card-body{
+.card-body {
   padding: 10px 10px;
 }
 
-.card-title{
+.card-title {
   margin-bottom: 0px;
 }
 
@@ -52,13 +100,13 @@
   padding-top: 0.5rem;
 }
 
-.card-rank{
-  display:flex;
+.card-rank {
+  display: flex;
   flex-direction: row;
   align-items: center;
 }
 
-.card-rank p{
+.card-rank p {
   font-size: 15px;
   text-align: center;
   padding: 5.25px 9.25px;
@@ -68,14 +116,14 @@
 .modal {
   display: flex;
   flex-direction: column;
-  
+
   /* Probably need media queries here */
   width: 600px;
   max-width: 100%;
-  
-  height: 700px;
+
+  height: 470px;
   max-height: 100%;
-  
+
   position: absolute;
   top: 50%;
   left: 50%;
@@ -89,15 +137,18 @@
 .modal-container-first {
   position: relative;
   text-align: center;
+  max-height: 320px;
+  max-width: 600px;
 
 }
 
-.modal-image{
+.modal-image {
   width: 100%;
   height: 100%;
+  object-fit: cover;
 }
 
-.modal-name-bottom-left{
+.modal-name-bottom-left {
   position: absolute;
   bottom: 15px;
   left: 20px;
@@ -107,7 +158,7 @@
   background: rgba(0, 0, 0, 0.6);
 }
 
-.modal-button-close{
+.modal-button-close {
   position: absolute;
   top: 20px;
   right: 20px;
@@ -118,20 +169,32 @@
   flex-direction: row;
 }
 
+.modal-container-third {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-button Button {
+  width: 100%;
+}
+
 .modal-address {
   padding: 20px;
   display: inline-block;
   flex: 1;
 }
 
-.modal-button-nav {
+.modal-button {
   display: grid;
+  width: 50%;
   place-items: center;
   justify-content: center;
-  padding: 0px 20px 0px 0px;
+  padding: 0px 0px 0px 0px;
 }
 
-.modal-button-nav-text{
+.modal-button-nav-text {
   display: inline-block;
   margin-right: 1rem;
 }
@@ -152,21 +215,11 @@
   padding: 5px 30px 30px 30px;
 }
 
-.modal-menu-scroll {
-  padding: 15px;
-  background-color: #fbdfdf;
-  height: 270px;
-  overflow-x: hidden;
-  overflow-y: auto;
-  text-align: center;
-  align-items: center;
-}
-
-
 
 @media only screen and (max-width: 768px) {
   .card-body {
     padding: 0.5em 1.2em;
+    font-size: 0.9rem;
   }
 
   .card-body .card-text {
@@ -177,12 +230,21 @@
     width: 50%;
   }
 
-  .modal{
-    width: 70%;
-    height: 70%;
+  .card-title {
+    font-size: 0.9rem;
   }
 
-  .modal-name-bottom-left{
+  .offCampus,
+  .onCampus {
+    width: 100%;
+  }
+
+  .modal {
+    width: 70%;
+    height: 50%;
+  }
+
+  .modal-name-bottom-left {
     position: absolute;
     bottom: 15px;
     left: 20px;
@@ -192,14 +254,14 @@
     background: rgba(0, 0, 0, 0.6);
   }
 
-  .modal-image{
+  .modal-image {
     width: 100%;
     height: 100%;
   }
 
 
   .modal-address {
-    padding:15px 15px 15px 15px;
+    padding: 15px 15px 15px 15px;
     font-size: small;
   }
 
@@ -208,10 +270,10 @@
 
   }
 
-  .modal-button-nav-text{
+  .modal-button-nav-text {
     display: none;
   }
-  
+
   .material-symbols-outlined {
     font-size: small;
   }
@@ -225,15 +287,4 @@
   .modal-menu-scroll {
     font-size: small;
   }
-
-  
-
-
-}
-
-@media only screen and (max-width: 1200px) {
-  .card img {
-    width: 40%;
-  }
-
 }
