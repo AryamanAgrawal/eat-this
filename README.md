@@ -7,6 +7,23 @@ CS 320 Project for Dining in Amherst
 
 ## Releases
 
+### [1.0 Release](https://github.com/users/AryamanAgrawal/projects/3)
+
+- Features:
+  - Dining recommendations by on/off campus option
+  - Tour function
+  - Link to menu
+  - Dining page for all dining options
+  - UI update for dining card
+  - Logout function
+
+- Canceled Features
+  - Dining recommendations based on user preferences
+  - storing user preferences
+  
+- Bugs:
+  - some of the dining images not rendering on mobile
+
 ### [Beta Release](https://github.com/users/AryamanAgrawal/projects/2)
 
 - Features: 
