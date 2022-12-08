@@ -16,9 +16,9 @@ const Home = () => {
   return (
     <div>
       {localStorage.getItem("token") ? (
-        <h1 style={{ textAlign: "center" }}>Logged In</h1>
+        <h3 className="headerText">Welcome</h3>
       ) : (
-        <h1 style={{ textAlign: "center" }}>Home Page</h1>
+        <h3 className="headerText">In A Rush? Pick one</h3>
       )}
       
       <div><a href="/diningPage"><Button className="seeAllButton">See All</Button></a></div>

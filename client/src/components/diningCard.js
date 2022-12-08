@@ -5,9 +5,8 @@ import "./diningCard.css"
 import Modal from "react-modal";
 import { getDistance } from 'geolib';
 import useCurrentLocation from "../components/geo-location";
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faLocationArrow } from '@fortawesome/fontawesome-free-solid'
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faLocationArrow } from '@fortawesome/fontawesome-free-solid'
 
 const geolocationOptions = {
     enableHighAccuracy: true,
@@ -16,7 +15,7 @@ const geolocationOptions = {
 };
 
 function DiningCard() {
-    const { location, error} = useCurrentLocation(geolocationOptions);
+    const { location, error } = useCurrentLocation(geolocationOptions);
     const [diningData, setDiningData] = useState([]);
 
     useEffect(() => {
@@ -32,21 +31,21 @@ function DiningCard() {
 
             const records = await response.json();
 
-            if (location === undefined) {            
-                setDiningData(records.result);              
-            }else{
+            if (location === undefined) {
+                setDiningData(records.result);
+            } else {
                 const diningArray = records.result;
-                diningArray.sort((a,b)=> {
-                    const aDistance = getDistance(location,{latitude : a.location.latitude, longitude: a.location.longitude});
-                    const bDistance = getDistance(location,{latitude : b.location.latitude, longitude: b.location.longitude});
-                    return  aDistance - bDistance; 
+                diningArray.sort((a, b) => {
+                    const aDistance = getDistance(location, { latitude: a.location.latitude, longitude: a.location.longitude });
+                    const bDistance = getDistance(location, { latitude: b.location.latitude, longitude: b.location.longitude });
+                    return aDistance - bDistance;
                 })
                 setDiningData(diningArray);
             }
 
         }
         fetchData();
-    }, [location,error])
+    }, [location, error])
 
     const [isOpen, setIsOpen] = useState(false);
     const [selectedInd, setSelectedInd] = React.useState(-1);
@@ -58,7 +57,7 @@ function DiningCard() {
     }
 
     const openURL = url => {
-        window.open(url,'_blank','noopener,noreferrer');
+        window.open(url, '_blank', 'noopener,noreferrer');
 
     };
 
@@ -69,12 +68,11 @@ function DiningCard() {
                 <Row guter={40} className="row">
                     {diningData.map((value, index) => (
                         <Col key={index} xs={12} md={6} lg={6}>
-                            <Card onClick={() => { setSelectedInd(index); setIsOpen(true); }}>
+                            <Card className ="diningCard" onClick={() => { setSelectedInd(index); setIsOpen(true); }}>
                                 <Card.Img src={value.image} alt="dining images" />
                                 <Card.Body>
-                                    <Card.Title className='card-title'><div className="card-rank"><p className="badge bg-dark">{index + 1}</p><span className="badge bg-success">{value.onCampus ? "On Campus" : "Off Campus"}</span></div><p>{value.name}</p> </Card.Title>
+                                    <Card.Title className='card-title'><div className="card-rank"><p className="badge bg-dark">{index + 1}</p>{value.onCampus ? <span className="badge bg-success">On Campus</span> : <span className="badge bg-danger">Off Campus</span> }</div><p>{value.name}</p> </Card.Title>
                                     <Card.Text className="cardlocation">{value.location.address}</Card.Text>
-
                                 </Card.Body>
                             </Card>
                         </Col>
@@ -97,35 +95,27 @@ function DiningCard() {
                     <img className='modal-image' src={diningData[selectedInd].image} alt="dining images" />
                     <div className='modal-name-bottom-left'>{diningData[selectedInd].name}</div>
                     <div className='modal-button-close'>
-                        <Button variant="danger" onClick={toggleModal}>
+                        <Button variant="danger" className="nav-button" onClick={toggleModal}>
                             <span className="material-symbols-outlined">close</span>
                         </Button>
                     </div>
                 </div>
                 <div className='modal-container-second'>
                     <div className='modal-address'>{diningData[selectedInd].location.address}</div>
-                    <div className='modal-button-nav'>
-                        <Button variant="success" onClick = {() => openURL('https://www.google.com/maps/dir/?api=1&origin=' + location.latitude + ',' + location.longitude + '&destination=' + diningData[selectedInd].location.latitude + ',' + diningData[selectedInd].location.longitude + '&travelmode=walking')}>
+                </div>
+                <div className='modal-container-third'>
+                <div className='modal-button'>
+                        <Button variant="success" className = "navButton" onClick = {() => openURL(diningData[selectedInd].menu)}>
+                            <div className='modal-button-nav-text'>View Menu</div> 
+                            <FontAwesomeIcon icon="fa-solid fa-bars" />          
+                        </Button>
+                    </div>
+
+                    <div className='modal-button'>
+                        <Button variant="success" className = "navButton" onClick = {() => openURL('https://www.google.com/maps/dir/?api=1&origin=' + location.latitude + ',' + location.longitude + '&destination=' + diningData[selectedInd].location.latitude + ',' + diningData[selectedInd].location.longitude + '&travelmode=walking')}>
                             <div className='modal-button-nav-text'>Navigate</div> 
                             <FontAwesomeIcon icon={faLocationArrow}/>          
                         </Button>
-                    </div>
-                </div>
-                <div className='modal-container-third'>
-                    <div className="modal-menu-scroll">
-                        Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                        Lorem Ipsum has been the industry's standard dummy text ever since the 1500s when a
-                        n unknown printer took a galley of type and scrambled it to make a type specimen book.
-                        It has survived not only five centuries, but also the leap into electronic typesetting,
-                        remaining essentially unchanged. It was popularised in the 1960s with the release of
-                        Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing
-                        software like Aldus PageMaker including versions of Lorem Ipsum. It is a long
-                        established fact that a reader will be distracted by the readable content of a page
-                        when looking at its layout. The point of using Lorem Ipsum is that it has a
-                        more-or-less normal distribution of letters, as opposed to using 'Content here,
-                        content here', making it look like readable English. Many desktop publishing packages
-                        and web page editors now use Lorem Ipsum as their default model text, and a search
-                        for 'lorem ipsum' will uncover many web sites still in their infancy.
                     </div>
                 </div>
 
