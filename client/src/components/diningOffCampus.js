@@ -5,8 +5,8 @@ import "./diningCard.css"
 import Modal from "react-modal";
 import { getDistance } from 'geolib';
 import useCurrentLocation from "../components/geo-location";
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faLocationArrow } from '@fortawesome/fontawesome-free-solid'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faLocationArrow } from '@fortawesome/fontawesome-free-solid'
 
 
 
@@ -17,12 +17,12 @@ const geolocationOptions = {
 };
 
 function DiningOffCampus() {
-    const { location, error} = useCurrentLocation(geolocationOptions);
+    const { location, error } = useCurrentLocation(geolocationOptions);
     const [diningData, setDiningData] = useState([]);
 
     useEffect(() => {
         const fetchData = async () => {
-            const response = await fetch(`http://localhost:8000/dining/off-campus`);
+            const response = await fetch(`https://umasseatthis.herokuapp.com/dining/off-campus`);
 
             if (!response.ok) {
                 const message = `An error occurred: ${response.statusText}`;
@@ -33,21 +33,21 @@ function DiningOffCampus() {
 
             const records = await response.json();
 
-            if (location === undefined) {            
-                setDiningData(records.result);              
-            }else{
+            if (location === undefined) {
+                setDiningData(records.result);
+            } else {
                 const diningArray = records.result;
-                diningArray.sort((a,b)=> {
-                    const aDistance = getDistance(location,{latitude : a.location.latitude, longitude: a.location.longitude});
-                    const bDistance = getDistance(location,{latitude : b.location.latitude, longitude: b.location.longitude});
-                    return  aDistance - bDistance; 
+                diningArray.sort((a, b) => {
+                    const aDistance = getDistance(location, { latitude: a.location.latitude, longitude: a.location.longitude });
+                    const bDistance = getDistance(location, { latitude: b.location.latitude, longitude: b.location.longitude });
+                    return aDistance - bDistance;
                 })
-                setDiningData(diningArray.slice(0,9));
+                setDiningData(diningArray.slice(0, 9));
             }
 
         }
         fetchData();
-    }, [location,error])
+    }, [location, error])
 
     const [isOpen, setIsOpen] = useState(false);
     const [selectedInd, setSelectedInd] = React.useState(-1);
@@ -59,33 +59,33 @@ function DiningOffCampus() {
     }
 
     const openURL = url => {
-        window.open(url,'_blank','noopener,noreferrer');
+        window.open(url, '_blank', 'noopener,noreferrer');
 
     };
 
 
     const DiningComponent = () => (
         <>
-        <div className="offCampus">
-            <div className= "title bg-danger ">
-                <p>Off Campus</p>
+            <div className="offCampus">
+                <div className="title bg-danger ">
+                    <p>Off Campus</p>
+                </div>
+
+                <Container>
+                    {diningData.map((value, index) => (
+                        <Col key={index}>
+                            <Card className="offCampusCard" onClick={() => { setSelectedInd(index); setIsOpen(true); }}>
+                                <Card.Img src={value.image} alt="dining images" />
+                                <Card.Body>
+                                    <Card.Title className='card-title'><div className="card-rank"><p className="badge bg-dark">{index + 1}</p><span className="badge bg-danger">{value.onCampus ? "On Campus" : "Off Campus"}</span></div><p>{value.name}</p> </Card.Title>
+                                    <Card.Text className="cardlocation">{value.location.address}</Card.Text>
+                                </Card.Body>
+                            </Card>
+                        </Col>
+                    ))}
+                </Container>
             </div>
-            
-            <Container>
-                {diningData.map((value, index) => (
-                    <Col key={index}>
-                        <Card className="offCampusCard" onClick={() => { setSelectedInd(index); setIsOpen(true); }}>
-                            <Card.Img src={value.image} alt="dining images" />
-                            <Card.Body>
-                                <Card.Title className='card-title'><div className="card-rank"><p className="badge bg-dark">{index + 1}</p><span className="badge bg-danger">{value.onCampus ? "On Campus" : "Off Campus"}</span></div><p>{value.name}</p> </Card.Title>
-                                <Card.Text className="cardlocation">{value.location.address}</Card.Text>
-                            </Card.Body>
-                        </Card>
-                    </Col>
-                ))}
-            </Container>
-        </div>
-            
+
 
             {modal && <Modal
                 isOpen={isOpen}
@@ -111,17 +111,17 @@ function DiningOffCampus() {
                     <div className='modal-address'>{diningData[selectedInd].location.address}</div>
                 </div>
                 <div className='modal-container-third'>
-                <div className='modal-button'>
-                        <Button variant="success" className = "navButton" onClick = {() => openURL(diningData[selectedInd].menu)}>
-                            <div className='modal-button-nav-text'>View Menu</div> 
-                            <FontAwesomeIcon icon="fa-solid fa-bars" />           
+                    <div className='modal-button'>
+                        <Button variant="success" className="navButton" onClick={() => openURL(diningData[selectedInd].menu)}>
+                            <div className='modal-button-nav-text'>View Menu</div>
+                            <FontAwesomeIcon icon="fa-solid fa-bars" />
                         </Button>
                     </div>
 
                     <div className='modal-button'>
-                        <Button variant="success" className = "navButton" onClick = {() => openURL('https://www.google.com/maps/dir/?api=1&origin=' + location.latitude + ',' + location.longitude + '&destination=' + diningData[selectedInd].location.latitude + ',' + diningData[selectedInd].location.longitude + '&travelmode=walking')}>
-                            <div className='modal-button-nav-text'>Navigate</div> 
-                            <FontAwesomeIcon icon={faLocationArrow}/>          
+                        <Button variant="success" className="navButton" onClick={() => openURL('https://www.google.com/maps/dir/?api=1&origin=' + location.latitude + ',' + location.longitude + '&destination=' + diningData[selectedInd].location.latitude + ',' + diningData[selectedInd].location.longitude + '&travelmode=walking')}>
+                            <div className='modal-button-nav-text'>Navigate</div>
+                            <FontAwesomeIcon icon={faLocationArrow} />
                         </Button>
                     </div>
                 </div>

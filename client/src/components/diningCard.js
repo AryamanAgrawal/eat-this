@@ -20,7 +20,7 @@ function DiningCard() {
 
     useEffect(() => {
         const fetchData = async () => {
-            const response = await fetch(`http://localhost:8000/dining`);
+            const response = await fetch(`https://umasseatthis.herokuapp.com/dining`);
 
             if (!response.ok) {
                 const message = `An error occurred: ${response.statusText}`;
@@ -68,10 +68,10 @@ function DiningCard() {
                 <Row guter={40} className="row">
                     {diningData.map((value, index) => (
                         <Col key={index} xs={12} md={6} lg={6}>
-                            <Card className ="diningCard" onClick={() => { setSelectedInd(index); setIsOpen(true); }}>
+                            <Card className="diningCard" onClick={() => { setSelectedInd(index); setIsOpen(true); }}>
                                 <Card.Img src={value.image} alt="dining images" />
                                 <Card.Body>
-                                    <Card.Title className='card-title'><div className="card-rank"><p className="badge bg-dark">{index + 1}</p>{value.onCampus ? <span className="badge bg-success">On Campus</span> : <span className="badge bg-danger">Off Campus</span> }</div><p>{value.name}</p> </Card.Title>
+                                    <Card.Title className='card-title'><div className="card-rank"><p className="badge bg-dark">{index + 1}</p>{value.onCampus ? <span className="badge bg-success">On Campus</span> : <span className="badge bg-danger">Off Campus</span>}</div><p>{value.name}</p> </Card.Title>
                                     <Card.Text className="cardlocation">{value.location.address}</Card.Text>
                                 </Card.Body>
                             </Card>
@@ -104,17 +104,17 @@ function DiningCard() {
                     <div className='modal-address'>{diningData[selectedInd].location.address}</div>
                 </div>
                 <div className='modal-container-third'>
-                <div className='modal-button'>
-                        <Button variant="success" className = "navButton" onClick = {() => openURL(diningData[selectedInd].menu)}>
-                            <div className='modal-button-nav-text'>View Menu</div> 
-                            <FontAwesomeIcon icon="fa-solid fa-bars" />          
+                    <div className='modal-button'>
+                        <Button variant="success" className="navButton" onClick={() => openURL(diningData[selectedInd].menu)}>
+                            <div className='modal-button-nav-text'>View Menu</div>
+                            <FontAwesomeIcon icon="fa-solid fa-bars" />
                         </Button>
                     </div>
 
                     <div className='modal-button'>
-                        <Button variant="success" className = "navButton" onClick = {() => openURL('https://www.google.com/maps/dir/?api=1&origin=' + location.latitude + ',' + location.longitude + '&destination=' + diningData[selectedInd].location.latitude + ',' + diningData[selectedInd].location.longitude + '&travelmode=walking')}>
-                            <div className='modal-button-nav-text'>Navigate</div> 
-                            <FontAwesomeIcon icon={faLocationArrow}/>          
+                        <Button variant="success" className="navButton" onClick={() => openURL('https://www.google.com/maps/dir/?api=1&origin=' + location.latitude + ',' + location.longitude + '&destination=' + diningData[selectedInd].location.latitude + ',' + diningData[selectedInd].location.longitude + '&travelmode=walking')}>
+                            <div className='modal-button-nav-text'>Navigate</div>
+                            <FontAwesomeIcon icon={faLocationArrow} />
                         </Button>
                     </div>
                 </div>
